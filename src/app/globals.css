@@ -16,6 +16,8 @@
 .light {
   /* Light theme colors */
   --background: #fefffe;
+  --background-gradient-from: #e0f2fe;
+  --background-gradient-to: #ffffff;
   --foreground: #0f172a;
   
   /* Brand colors - Deep Navy & Gold */
@@ -145,6 +147,8 @@ html[data-locale^="zh"] {
 /* Dark mode styles */
 .dark {
   --background: #0f172a;
+  --background-gradient-from: #0a1929;
+  --background-gradient-to: #000000;
   --foreground: #f8fafc;
   
   /* Adjust colors for dark mode */
@@ -175,7 +179,12 @@ html[data-locale^="zh"] {
 
 
 body {
-  background: var(--background);
+  background: linear-gradient(
+    to bottom,
+    var(--background-gradient-from) 0%,
+    var(--background-gradient-to) 100%
+  );
+  background-attachment: fixed;
   color: var(--foreground);
   font-family: var(--font-sans);
   line-height: var(--line-height-normal);
