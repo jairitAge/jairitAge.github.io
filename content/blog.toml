@@ -3,7 +3,8 @@ title = "Blog"
 description = "Random thoughts and notes from life and work."
 
 [[items]]
-title = "—"
-date = ""
-location = ""
-content = "Coming soon."
+title = "Solo Hot Pot 😋"
+image = "/blog/hotpot.jpg"
+date = "2026-04-25"
+location = "Beijing, China"
+content = "Solo hot pot night."

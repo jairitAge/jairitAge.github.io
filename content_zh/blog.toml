@@ -3,7 +3,8 @@ title = "博客"
 description = "生活与工作中的随笔与杂记。"
 
 [[items]]
-title = "—"
-date = ""
-location = ""
-content = "敬请期待。"
+title = "一人食火锅 😋"
+image = "/blog/hotpot.jpg"
+date = "2026-04-25"
+location = "中国 北京"
+content = "一人食火锅😋"
