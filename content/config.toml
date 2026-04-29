@@ -64,13 +64,13 @@ target = "awards"
 href = "/awards"
 
 [[navigation]]
-title = "Blog"
-type = "page"
-target = "blog"
-href = "/blog"
-
-[[navigation]]
 title = "CV"
 type = "page"
 target = "cv"
 href = "/cv.pdf"
+
+[[navigation]]
+title = "Blog"
+type = "page"
+target = "blog"
+href = "/blog"

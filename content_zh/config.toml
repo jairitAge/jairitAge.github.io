@@ -34,13 +34,13 @@ target = "awards"
 href = "/awards"
 
 [[navigation]]
-title = "博客"
-type = "page"
-target = "blog"
-href = "/blog"
-
-[[navigation]]
 title = "简历"
 type = "page"
 target = "cv"
 href = "/cv.pdf"
+
+[[navigation]]
+title = "博客"
+type = "page"
+target = "blog"
+href = "/blog"
