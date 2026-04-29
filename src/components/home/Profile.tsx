@@ -293,14 +293,23 @@ export default function Profile({ author, social, features, researchInterests }:
                                                 style={{
                                                     width: '160px',
                                                     height: '160px',
-                                                    backgroundImage: `url(${social.wechat_qr})`,
-                                                    backgroundSize: 'contain',
-                                                    backgroundRepeat: 'no-repeat',
-                                                    backgroundPosition: 'center',
                                                     backgroundColor: '#ffffff',
+                                                    padding: '12px',
+                                                    boxSizing: 'border-box',
                                                     borderRadius: '0.25rem',
                                                 }}
-                                            />
+                                            >
+                                                <div
+                                                    style={{
+                                                        width: '100%',
+                                                        height: '100%',
+                                                        backgroundImage: `url(${social.wechat_qr})`,
+                                                        backgroundSize: 'contain',
+                                                        backgroundRepeat: 'no-repeat',
+                                                        backgroundPosition: 'center',
+                                                    }}
+                                                />
+                                            </div>
                                             <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-neutral-800"></div>
                                         </motion.div>
                                     )}
