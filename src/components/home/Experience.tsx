@@ -9,6 +9,7 @@ export interface ExperienceItem {
   location?: string;
   date?: string;
   role?: string;
+  major?: string;
   advisor?: string;
 }
 
@@ -53,6 +54,9 @@ export default function Experience({ items, title = 'Experience' }: ExperiencePr
               </div>
               {item.date && <div className="text-sm text-neutral-500 dark:text-neutral-400">{item.date}</div>}
               {item.role && <div>{item.role}</div>}
+              {item.major && (
+                <div className="text-sm text-neutral-600 dark:text-neutral-500">{item.major}</div>
+              )}
               {item.advisor && (
                 <div className="text-sm text-neutral-600 dark:text-neutral-500">{item.advisor}</div>
               )}

@@ -30,6 +30,7 @@ interface ExperienceItem {
   location?: string;
   date?: string;
   role?: string;
+  major?: string;
   advisor?: string;
 }
 
