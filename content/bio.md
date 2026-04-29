@@ -1,5 +1,3 @@
-I am a PhD student at the School of Science, University of Example, advised by [Prof. Advisor One](https://example.com) and [Dr. Advisor Two](https://example.com).
+I am an undergraduate student in Applied Physics at the School of Electronics Engineering and Computer Science (EECS), Peking University, advised by [Prof. Tianyu Jia](https://www.ece.pku.edu.cn/).
 
-Prior to this, I obtained a BSc degree with First Class Honours in Natural Science from the University of Example.
-
-My current research focuses on investigating the mathematical principles of natural philosophy.
+My research focuses on **hardware/software co-design** and **AI acceleration**, with interests spanning efficient inference systems, GPU/accelerator kernels, and full-stack optimization for large models.
