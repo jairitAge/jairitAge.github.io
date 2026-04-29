@@ -21,6 +21,12 @@ source = "experience.toml"
 title = "经历"
 
 [[sections]]
+id = "miscellaneous"
+type = "markdown"
+source = "miscellaneous.md"
+title = "其他"
+
+[[sections]]
 id = "news"
 type = "list"
 title = "动态"

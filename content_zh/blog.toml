@@ -1,0 +1,9 @@
+type = "card"
+title = "博客"
+description = "生活与工作中的随笔与杂记。"
+
+[[items]]
+title = "第一篇占位"
+date = "2026-04"
+location = "中国 北京"
+content = "用真实内容替换。把图片放到 `public/blog/` 下，给该条目加上 `image = \"/blog/your-file.jpg\"` 即可。"

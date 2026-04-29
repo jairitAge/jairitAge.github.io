@@ -18,6 +18,7 @@ export interface CardItem {
     title: string;
     subtitle?: string;
     date?: string;
+    location?: string;
     content?: string;
     tags?: string[];
     link?: string;

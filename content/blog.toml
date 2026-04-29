@@ -1,0 +1,9 @@
+type = "card"
+title = "Blog"
+description = "Random thoughts and notes from life and work."
+
+[[items]]
+title = "First Post Placeholder"
+date = "2026-04"
+location = "Beijing, China"
+content = "Replace this with a real entry. Drop your image into `public/blog/` and add `image = \"/blog/your-file.jpg\"` to this item."
