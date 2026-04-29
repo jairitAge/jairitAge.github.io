@@ -16,7 +16,7 @@ title = "Special Links"
 
 [[sections.items]]
 name = "Tianyu Jia"
-affiliation = "Peking University · AI Acceleration"
+affiliation = "Peking University"
 url = "https://www.tianyuj.com/"
 
 [[sections]]
@@ -33,5 +33,5 @@ markdown = """
 
 1. Add this site as one of your friend links.
 2. Ensure your site is activated.
-3. Contact me via [email](mailto:qianxu@stu.pku.edu.cn) or WeChat.
+3. Contact me via email or WeChat.
 """

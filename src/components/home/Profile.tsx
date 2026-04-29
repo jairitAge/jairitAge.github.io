@@ -27,6 +27,18 @@ const OrcidIcon = ({ className }: { className?: string }) => (
     </svg>
 );
 
+// Custom WeChat icon component
+const WeChatIcon = ({ className }: { className?: string }) => (
+    <svg
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        className={className}
+        xmlns="http://www.w3.org/2000/svg"
+    >
+        <path d="M9.5 4C5.36 4 2 6.91 2 10.5c0 2.06 1.13 3.89 2.86 5.07L4 18l3.16-1.45c.74.18 1.52.28 2.34.28.18 0 .35 0 .53-.02-.13-.42-.21-.86-.21-1.31 0-3.04 2.91-5.5 6.5-5.5.18 0 .35.01.53.03C16.31 7.39 13.21 4 9.5 4zM7 9c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm5 0c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm10 6.5c0-2.49-2.46-4.5-5.5-4.5-3.04 0-5.5 2.01-5.5 4.5s2.46 4.5 5.5 4.5c.6 0 1.18-.08 1.72-.22L20.5 21l-.86-2.27C21.05 17.81 22 16.74 22 15.5zM15 14.5c-.41 0-.75-.34-.75-.75s.34-.75.75-.75.75.34.75.75-.34.75-.75.75zm3.5 0c-.41 0-.75-.34-.75-.75s.34-.75.75-.75.75.34.75.75-.34.75-.75.75z" />
+    </svg>
+);
+
 interface ProfileProps {
     author: SiteConfig['author'];
     social: SiteConfig['social'];
@@ -43,7 +55,9 @@ export default function Profile({ author, social, features, researchInterests }:
     const [isAddressPinned, setIsAddressPinned] = useState(false);
     const [showEmail, setShowEmail] = useState(false);
     const [isEmailPinned, setIsEmailPinned] = useState(false);
-    const [lastClickedTooltip, setLastClickedTooltip] = useState<'email' | 'address' | null>(null);
+    const [showWechat, setShowWechat] = useState(false);
+    const [isWechatPinned, setIsWechatPinned] = useState(false);
+    const [lastClickedTooltip, setLastClickedTooltip] = useState<'email' | 'address' | 'wechat' | null>(null);
 
     // Check local storage for user's like status
     useEffect(() => {
@@ -75,6 +89,12 @@ export default function Profile({ author, social, features, researchInterests }:
             href: `mailto:${social.email}`,
             icon: EnvelopeIcon,
             isEmail: true,
+        }] : []),
+        ...(social.wechat_qr ? [{
+            name: 'WeChat',
+            href: '#',
+            icon: WeChatIcon,
+            isWechat: true,
         }] : []),
         ...(social.location || social.location_details ? [{
             name: messages.profile.location,
@@ -209,6 +229,67 @@ export default function Profile({ author, social, features, researchInterests }:
                                                     )}
                                                 </div>
 
+                                            </div>
+                                            <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-neutral-800"></div>
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
+                            </div>
+                        );
+                    }
+                    if ((link as { isWechat?: boolean }).isWechat && social.wechat_qr) {
+                        return (
+                            <div key={link.name} className="relative">
+                                <button
+                                    onMouseEnter={() => {
+                                        if (!isWechatPinned) setShowWechat(true);
+                                        setLastClickedTooltip('wechat');
+                                    }}
+                                    onMouseLeave={() => !isWechatPinned && setShowWechat(false)}
+                                    onClick={() => {
+                                        setIsWechatPinned(!isWechatPinned);
+                                        setShowWechat(!isWechatPinned);
+                                        setLastClickedTooltip('wechat');
+                                    }}
+                                    className={`p-2 sm:p-2 transition-colors duration-200 ${isWechatPinned
+                                        ? 'text-accent'
+                                        : 'text-neutral-600 dark:text-neutral-400 hover:text-accent'
+                                        }`}
+                                    aria-label={link.name}
+                                >
+                                    <WeChatIcon className="h-5 w-5" />
+                                </button>
+
+                                <AnimatePresence>
+                                    {(showWechat || isWechatPinned) && (
+                                        <motion.div
+                                            initial={{ opacity: 0, y: 10, scale: 0.8 }}
+                                            animate={{ opacity: 1, y: -10, scale: 1 }}
+                                            exit={{ opacity: 0, y: -20, scale: 0.8 }}
+                                            className={`absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-full bg-neutral-800 text-white px-4 py-3 rounded-lg text-sm font-medium shadow-lg ${lastClickedTooltip === 'wechat' ? 'z-20' : 'z-10'
+                                                }`}
+                                            onMouseEnter={() => {
+                                                if (!isWechatPinned) setShowWechat(true);
+                                                setLastClickedTooltip('wechat');
+                                            }}
+                                            onMouseLeave={() => !isWechatPinned && setShowWechat(false)}
+                                        >
+                                            <div className="text-center">
+                                                <div className="flex items-center justify-center space-x-2 mb-2">
+                                                    <p className="font-semibold">WeChat</p>
+                                                    {!isWechatPinned && (
+                                                        <div className="flex items-center space-x-0.5 text-xs text-neutral-400 opacity-60">
+                                                            <Pin className="h-2.5 w-2.5" />
+                                                            <span className="hidden sm:inline">{messages.profile.click}</span>
+                                                        </div>
+                                                    )}
+                                                </div>
+                                                {/* eslint-disable-next-line @next/next/no-img-element */}
+                                                <img
+                                                    src={social.wechat_qr}
+                                                    alt="WeChat QR"
+                                                    className="block w-48 h-auto rounded bg-white"
+                                                />
                                             </div>
                                             <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-neutral-800"></div>
                                         </motion.div>

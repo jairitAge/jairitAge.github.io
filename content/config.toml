@@ -21,6 +21,7 @@ location_details = [
 ]
 github = "https://github.com/jairitAge"
 linkedin = "https://www.linkedin.com/in/qianxu677"
+wechat_qr = "/wechat-qr.jpg"
 
 [features]
 # Show a like button on the about page

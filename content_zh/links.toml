@@ -16,7 +16,7 @@ title = "特别友链"
 
 [[sections.items]]
 name = "贾天宇"
-affiliation = "北京大学 · AI 加速"
+affiliation = "北京大学"
 url = "https://www.tianyuj.com/"
 
 [[sections]]
@@ -33,5 +33,5 @@ markdown = """
 
 1. 先把本站加入你的友链列表
 2. 确保你的站点正常访问
-3. 通过 [邮箱](mailto:qianxu@stu.pku.edu.cn) 或 微信 联系我
+3. 通过邮箱或微信联系我
 """
