@@ -60,7 +60,7 @@ href = "/publications"
 
 [[navigation]]
 title = "CV"
-type = "page"
+type = "link"
 target = "cv"
 href = "/cv.pdf"
 

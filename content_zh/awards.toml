@@ -1,9 +1,0 @@
-type = "card"
-title = "奖项"
-description = "荣誉与奖项。"
-
-[[items]]
-title = "—"
-subtitle = "敬请期待"
-date = ""
-content = "稍后补充。"

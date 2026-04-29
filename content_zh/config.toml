@@ -29,7 +29,7 @@ href = "/publications"
 
 [[navigation]]
 title = "简历"
-type = "page"
+type = "link"
 target = "cv"
 href = "/cv.pdf"
 
