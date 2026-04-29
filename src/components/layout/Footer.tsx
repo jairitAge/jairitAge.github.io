@@ -24,7 +24,7 @@ export default function Footer({ lastUpdated, lastUpdatedByLocale, defaultLocale
     script.type = 'text/javascript';
     script.id = 'clustrmaps';
     script.src =
-      'https://clustrmaps.com/map_v2.js?d=O8yCy1ZqyS0B2EIJxnHDBRoE_-qtoy5zcaL18bx2znI&cl=ffffff&w=a';
+      'https://cdn.clustrmaps.com/map_v2.js?cl=ffffff&w=a&t=n&d=O8yCy1ZqyS0B2EIJxnHDBRoE_-qtoy5zcaL18bx2znI&cmo=ff5353&cmn=ff5353';
     container.appendChild(script);
   }, []);
 
