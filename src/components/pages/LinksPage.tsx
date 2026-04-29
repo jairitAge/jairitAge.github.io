@@ -19,14 +19,17 @@ const markdownComponents = {
     ul: ({ children }: React.ComponentProps<'ul'>) => <ul className="list-disc list-inside mb-3 space-y-1">{children}</ul>,
     ol: ({ children }: React.ComponentProps<'ol'>) => <ol className="list-decimal list-inside mb-3 space-y-1">{children}</ol>,
     li: ({ children }: React.ComponentProps<'li'>) => <li className="mb-1">{children}</li>,
-    a: ({ ...props }) => (
-        <a
-            {...props}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-accent font-medium hover:underline"
-        />
-    ),
+    a: ({ href, ...props }: React.ComponentProps<'a'>) => {
+        const isExternal = typeof href === 'string' && /^https?:\/\//i.test(href);
+        return (
+            <a
+                href={href}
+                {...props}
+                {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                className="text-accent font-medium hover:underline"
+            />
+        );
+    },
     code: ({ children }: React.ComponentProps<'code'>) => (
         <code className="px-1.5 py-0.5 rounded bg-neutral-100 dark:bg-neutral-800 text-[0.95em] break-all">{children}</code>
     ),
