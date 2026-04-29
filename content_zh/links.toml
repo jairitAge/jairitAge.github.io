@@ -11,6 +11,12 @@ affiliation = "0x7c00"
 url = "https://xili.wang/"
 avatar = "/links/xili.png"
 
+[[sections.items]]
+name = "Arthals' ink"
+affiliation = "所见高山远木，阔云流风；所幸岁月盈余，了无拘束"
+url = "https://arthals.ink/"
+avatar = "/links/arthals.png"
+
 [[sections]]
 title = "特别友链"
 
