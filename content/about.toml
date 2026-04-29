@@ -21,14 +21,14 @@ source = "experience.toml"
 title = "Experience"
 
 [[sections]]
-id = "miscellaneous"
-type = "markdown"
-source = "miscellaneous.md"
-title = "Miscellaneous"
-
-[[sections]]
 id = "news"
 type = "list"
 title = "News"
 source = "news.toml"
+
+[[sections]]
+id = "miscellaneous"
+type = "markdown"
+source = "miscellaneous.md"
+title = "Miscellaneous"
 
