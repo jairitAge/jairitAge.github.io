@@ -37,7 +37,14 @@ export interface LinkItem {
     avatar?: string;
 }
 
+export interface LinksSection {
+    title?: string;
+    items?: LinkItem[];
+    markdown?: string;
+}
+
 export interface LinksPageConfig extends BasePageConfig {
     type: 'links';
-    items: LinkItem[];
+    items?: LinkItem[];
+    sections?: LinksSection[];
 }

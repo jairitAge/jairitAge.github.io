@@ -2,7 +2,36 @@ type = "links"
 title = "友链"
 description = "导师、合作者与推荐站点。"
 
-[[items]]
+[[sections]]
+title = "常规友链"
+
+[[sections.items]]
+name = "Xili's Site"
+affiliation = "0x7c00"
+url = "https://xili.wang/"
+avatar = "/links/xili.png"
+
+[[sections]]
+title = "特别友链"
+
+[[sections.items]]
 name = "贾天宇"
 affiliation = "北京大学 · AI 加速"
 url = "https://www.tianyuj.com/"
+
+[[sections]]
+title = "申请友链"
+markdown = """
+**本站信息 ↓**
+
+- **名称：** 王乾旭 / Qianxu Wang
+- **简介：** PKU 本科 — 软硬件协同设计 & AI 加速
+- **链接：** `https://jairitAge.github.io/`
+- **头像：** `https://jairitAge.github.io/bio.jpg`
+
+**友链申请说明：**
+
+1. 先把本站加入你的友链列表
+2. 确保你的站点正常访问
+3. 通过 [邮箱](mailto:qianxu@stu.pku.edu.cn) 联系我
+"""

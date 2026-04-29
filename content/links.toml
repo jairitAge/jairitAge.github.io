@@ -2,7 +2,36 @@ type = "links"
 title = "Links"
 description = "Friends, collaborators, and recommended sites."
 
-[[items]]
+[[sections]]
+title = "Common Links"
+
+[[sections.items]]
+name = "Xili's Site"
+affiliation = "0x7c00"
+url = "https://xili.wang/"
+avatar = "/links/xili.png"
+
+[[sections]]
+title = "Special Links"
+
+[[sections.items]]
 name = "Tianyu Jia"
 affiliation = "Peking University · AI Acceleration"
 url = "https://www.tianyuj.com/"
+
+[[sections]]
+title = "Apply Links"
+markdown = """
+**Site Info ↓**
+
+- **Name:** Qianxu Wang
+- **Desc:** PKU undergrad — HW/SW co-design & AI acceleration
+- **Link:** `https://jairitAge.github.io/`
+- **Avatar:** `https://jairitAge.github.io/bio.jpg`
+
+**Friend Link Application Instructions:**
+
+1. Add this site as one of your friend links.
+2. Ensure your site is activated.
+3. Contact me via [email](mailto:qianxu@stu.pku.edu.cn).
+"""
