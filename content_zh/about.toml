@@ -15,6 +15,12 @@ source = "bio.md"
 title = "关于我"
 
 [[sections]]
+id = "experience"
+type = "markdown"
+source = "experience.md"
+title = "经历"
+
+[[sections]]
 id = "news"
 type = "list"
 title = "动态"

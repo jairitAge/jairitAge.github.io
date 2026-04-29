@@ -220,6 +220,34 @@ export default function Navigation({
                       {effectiveItems.map((item) => {
                         const isActive = isDesktopItemActive(item);
                         const href = getDesktopItemHref(item);
+                        const isFileOrExternal =
+                          /^https?:\/\//.test(item.href) || /\.[a-z0-9]+(\?|#|$)/i.test(item.href);
+
+                        const linkClass = cn(
+                          'relative px-3 py-2 text-sm font-medium rounded-lg transition-colors duration-150',
+                          isActive
+                            ? 'text-primary'
+                            : hoveredHref === href
+                              ? 'text-primary'
+                              : 'text-neutral-600'
+                        );
+
+                        if (isFileOrExternal) {
+                          return (
+                            <a
+                              key={item.target}
+                              href={item.href}
+                              data-nav-href={href}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              {...(/\.pdf(\?|#|$)/i.test(item.href) ? { download: '' } : {})}
+                              onMouseEnter={() => setHoveredHref(href)}
+                              className={linkClass}
+                            >
+                              {item.title}
+                            </a>
+                          );
+                        }
 
                         return (
                           <Link
@@ -229,14 +257,7 @@ export default function Navigation({
                             prefetch={true}
                             onClick={() => enableOnePageMode && setActiveHash(`#${item.target}`)}
                             onMouseEnter={() => setHoveredHref(href)}
-                            className={cn(
-                              'relative px-3 py-2 text-sm font-medium rounded-lg transition-colors duration-150',
-                              isActive
-                                ? 'text-primary'
-                                : hoveredHref === href
-                                  ? 'text-primary'
-                                  : 'text-neutral-600'
-                            )}
+                            className={linkClass}
                           >
                             {item.title}
                           </Link>
@@ -290,6 +311,15 @@ export default function Navigation({
                       const href = enableOnePageMode
                         ? (item.href === '/' ? '/' : `/#${item.target}`)
                         : item.href;
+                      const isFileOrExternal =
+                        /^https?:\/\//.test(item.href) || /\.[a-z0-9]+(\?|#|$)/i.test(item.href);
+
+                      const mobileClass = cn(
+                        'block px-3 py-2 rounded-md text-base font-medium transition-all duration-200',
+                        isActive
+                          ? 'text-primary bg-accent/10 border-l-4 border-accent'
+                          : 'text-neutral-600 hover:text-primary hover:bg-neutral-50'
+                      );
 
                       return (
                         <motion.div
@@ -298,20 +328,28 @@ export default function Navigation({
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ delay: index * 0.1 }}
                         >
-                          <Disclosure.Button
-                            as={Link}
-                            href={href}
-                            prefetch={true}
-                            onClick={() => enableOnePageMode && setActiveHash(item.href === '/' ? '' : `#${item.target}`)}
-                            className={cn(
-                              'block px-3 py-2 rounded-md text-base font-medium transition-all duration-200',
-                              isActive
-                                ? 'text-primary bg-accent/10 border-l-4 border-accent'
-                                : 'text-neutral-600 hover:text-primary hover:bg-neutral-50'
-                            )}
-                          >
-                            {item.title}
-                          </Disclosure.Button>
+                          {isFileOrExternal ? (
+                            <Disclosure.Button
+                              as="a"
+                              href={item.href}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              {...(/\.pdf(\?|#|$)/i.test(item.href) ? { download: '' } : {})}
+                              className={mobileClass}
+                            >
+                              {item.title}
+                            </Disclosure.Button>
+                          ) : (
+                            <Disclosure.Button
+                              as={Link}
+                              href={href}
+                              prefetch={true}
+                              onClick={() => enableOnePageMode && setActiveHash(item.href === '/' ? '' : `#${item.target}`)}
+                              className={mobileClass}
+                            >
+                              {item.title}
+                            </Disclosure.Button>
+                          )}
                         </motion.div>
                       );
                     })}
