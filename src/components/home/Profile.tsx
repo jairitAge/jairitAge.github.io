@@ -288,15 +288,7 @@ export default function Profile({ author, social, features, researchInterests }:
                                             onMouseLeave={() => !isWechatPinnedRef.current && setShowWechat(false)}
                                         >
                                             <div className="text-center">
-                                                <div className="flex items-center justify-center space-x-2 mb-2">
-                                                    <p className="font-semibold">WeChat</p>
-                                                    {!isWechatPinned && (
-                                                        <div className="flex items-center space-x-0.5 text-xs text-neutral-400 opacity-60">
-                                                            <Pin className="h-2.5 w-2.5" />
-                                                            <span className="hidden sm:inline">{messages.profile.click}</span>
-                                                        </div>
-                                                    )}
-                                                </div>
+                                                <p className="font-semibold mb-2">WeChat</p>
                                                 {/* eslint-disable-next-line @next/next/no-img-element */}
                                                 <img
                                                     src={social.wechat_qr}
