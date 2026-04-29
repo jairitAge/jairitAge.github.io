@@ -291,8 +291,8 @@ export default function Profile({ author, social, features, researchInterests }:
                                                 role="img"
                                                 aria-label="WeChat QR"
                                                 style={{
-                                                    width: '180px',
-                                                    height: '180px',
+                                                    width: '160px',
+                                                    height: '160px',
                                                     backgroundImage: `url(${social.wechat_qr})`,
                                                     backgroundSize: 'contain',
                                                     backgroundRepeat: 'no-repeat',
