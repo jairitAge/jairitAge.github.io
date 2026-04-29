@@ -30,6 +30,7 @@ title = "Special Links"
 name = "Tianyu Jia"
 affiliation = "PACIFIC Lab"
 url = "https://www.tianyuj.com/"
+avatar = "/links/pacific.png"
 
 [[sections]]
 title = "Apply Links"

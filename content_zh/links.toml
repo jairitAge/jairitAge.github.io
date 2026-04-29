@@ -30,6 +30,7 @@ title = "特别友链"
 name = "贾天宇"
 affiliation = "PACIFIC Lab"
 url = "https://www.tianyuj.com/"
+avatar = "/links/pacific.png"
 
 [[sections]]
 title = "申请友链"
