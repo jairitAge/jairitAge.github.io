@@ -293,7 +293,7 @@ export default function Profile({ author, social, features, researchInterests }:
                                                 <img
                                                     src={social.wechat_qr}
                                                     alt="WeChat QR"
-                                                    className="block w-64 h-auto rounded bg-white"
+                                                    className="block w-72 sm:w-80 h-auto rounded bg-white"
                                                 />
                                             </div>
                                             <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-neutral-800"></div>
