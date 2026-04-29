@@ -3,22 +3,7 @@ title = "Blog"
 description = "Random thoughts and notes from life and work."
 
 [[items]]
-title = "First Run on the Black Diamond"
-image = "/blog/snowboard.jpg"
-date = "2026-02"
-location = "Chongli, China"
-content = "Tried my first proper black-diamond slope this season. Pretty messy at the top, but somehow stuck the bottom half. Knees still recovering, but already planning the next trip."
-
-[[items]]
-title = "Rewatching Tenet"
-image = "/blog/cinema.jpg"
-date = "2026-01"
-location = "Beijing, China"
-content = "Watched **Tenet** again on a proper big screen. Caught a couple of palindrome details I missed the first time. Nolan really doesn't waste a single frame — every reverse shot pays off."
-
-[[items]]
-title = "Sunday League at Wuti"
-image = "/blog/soccer.jpg"
-date = "2025-12"
-location = "Peking University"
-content = "Played a quick scrimmage at the PKU Wuti pitch. Cold air, frozen turf, but a good 2-1 win. Nothing beats a Sunday afternoon kickabout with the lab guys."
+title = "—"
+date = ""
+location = ""
+content = "Coming soon."

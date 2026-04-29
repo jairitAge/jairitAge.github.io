@@ -3,22 +3,7 @@ title = "博客"
 description = "生活与工作中的随笔与杂记。"
 
 [[items]]
-title = "第一次冲黑道"
-image = "/blog/snowboard.jpg"
-date = "2026-02"
-location = "中国 崇礼"
-content = "本赛季第一次正经挑战黑道，前半段一路凌乱，后半段竟然稳住了。膝盖还在缓，下次见。"
-
-[[items]]
-title = "重看《信条》"
-image = "/blog/cinema.jpg"
-date = "2026-01"
-location = "中国 北京"
-content = "在大银幕上重温了一遍 **Tenet**，这次又抓到了几处第一次没注意到的回文细节。诺兰没有一帧浪费 —— 每个倒放镜头都给得回。"
-
-[[items]]
-title = "周末五体足球"
-image = "/blog/soccer.jpg"
-date = "2025-12"
-location = "北京大学"
-content = "周日下午在五体踢了一场约球，冷得不行，场地也冻硬了，最后 2-1 拿下。没什么比和组里兄弟一起踢一场更解压。"
+title = "—"
+date = ""
+location = ""
+content = "敬请期待。"
