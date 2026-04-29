@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useRef } from 'react';
 import { useLocaleStore } from '@/lib/stores/localeStore';
 import { useMessages } from '@/lib/i18n/useMessages';
 
@@ -12,6 +13,20 @@ interface FooterProps {
 export default function Footer({ lastUpdated, lastUpdatedByLocale, defaultLocale = 'en' }: FooterProps) {
   const locale = useLocaleStore((state) => state.locale);
   const messages = useMessages();
+  const mapRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const container = mapRef.current;
+    if (!container) return;
+    if (container.querySelector('script#clustrmaps')) return;
+
+    const script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.id = 'clustrmaps';
+    script.src =
+      'https://clustrmaps.com/map_v2.js?d=O8yCy1ZqyS0B2EIJxnHDBRoE_-qtoy5zcaL18bx2znI&cl=ffffff&w=a';
+    container.appendChild(script);
+  }, []);
 
   const resolvedLastUpdated =
     lastUpdatedByLocale?.[locale] ||
@@ -24,21 +39,7 @@ export default function Footer({ lastUpdated, lastUpdatedByLocale, defaultLocale
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <div className="flex flex-col items-center gap-3 mb-4">
           <p className="text-xs text-neutral-500">Visitors</p>
-          <a
-            href="https://clustrmaps.com/site/1c9vr"
-            title="ClustrMaps"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="block"
-          >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="https://www.clustrmaps.com/map_v2.png?d=O8yCy1ZqyS0B2EIJxnHDBRoE_-qtoy5zcaL18bx2znI&cl=ffffff"
-              alt="Visitor map"
-              className="w-full max-w-[480px] h-auto"
-              loading="lazy"
-            />
-          </a>
+          <div ref={mapRef} className="w-full max-w-[800px]" />
         </div>
         <div className="flex flex-col sm:flex-row justify-between items-center gap-2">
           <p className="text-xs text-neutral-500">
