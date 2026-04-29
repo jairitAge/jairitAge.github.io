@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import {
@@ -58,6 +58,15 @@ export default function Profile({ author, social, features, researchInterests }:
     const [showWechat, setShowWechat] = useState(false);
     const [isWechatPinned, setIsWechatPinned] = useState(false);
     const [lastClickedTooltip, setLastClickedTooltip] = useState<'email' | 'address' | 'wechat' | null>(null);
+
+    // Refs mirror the latest pinned values so onMouseLeave handlers don't
+    // close over stale state right after a click toggles the pin.
+    const isAddressPinnedRef = useRef(isAddressPinned);
+    const isEmailPinnedRef = useRef(isEmailPinned);
+    const isWechatPinnedRef = useRef(isWechatPinned);
+    isAddressPinnedRef.current = isAddressPinned;
+    isEmailPinnedRef.current = isEmailPinned;
+    isWechatPinnedRef.current = isWechatPinned;
 
     // Check local storage for user's like status
     useEffect(() => {
@@ -168,7 +177,7 @@ export default function Profile({ author, social, features, researchInterests }:
                                         if (!isAddressPinned) setShowAddress(true);
                                         setLastClickedTooltip('address');
                                     }}
-                                    onMouseLeave={() => !isAddressPinned && setShowAddress(false)}
+                                    onMouseLeave={() => !isAddressPinnedRef.current && setShowAddress(false)}
                                     onClick={() => {
                                         setIsAddressPinned(!isAddressPinned);
                                         setShowAddress(!isAddressPinned);
@@ -200,7 +209,7 @@ export default function Profile({ author, social, features, researchInterests }:
                                                 if (!isAddressPinned) setShowAddress(true);
                                                 setLastClickedTooltip('address');
                                             }}
-                                            onMouseLeave={() => !isAddressPinned && setShowAddress(false)}
+                                            onMouseLeave={() => !isAddressPinnedRef.current && setShowAddress(false)}
                                         >
                                             <div className="text-center">
                                                 <div className="flex items-center justify-center space-x-2 mb-1">
@@ -245,7 +254,7 @@ export default function Profile({ author, social, features, researchInterests }:
                                         if (!isWechatPinned) setShowWechat(true);
                                         setLastClickedTooltip('wechat');
                                     }}
-                                    onMouseLeave={() => !isWechatPinned && setShowWechat(false)}
+                                    onMouseLeave={() => !isWechatPinnedRef.current && setShowWechat(false)}
                                     onClick={() => {
                                         setIsWechatPinned(!isWechatPinned);
                                         setShowWechat(!isWechatPinned);
@@ -272,7 +281,7 @@ export default function Profile({ author, social, features, researchInterests }:
                                                 if (!isWechatPinned) setShowWechat(true);
                                                 setLastClickedTooltip('wechat');
                                             }}
-                                            onMouseLeave={() => !isWechatPinned && setShowWechat(false)}
+                                            onMouseLeave={() => !isWechatPinnedRef.current && setShowWechat(false)}
                                         >
                                             <div className="text-center">
                                                 <div className="flex items-center justify-center space-x-2 mb-2">
@@ -306,7 +315,7 @@ export default function Profile({ author, social, features, researchInterests }:
                                         if (!isEmailPinned) setShowEmail(true);
                                         setLastClickedTooltip('email');
                                     }}
-                                    onMouseLeave={() => !isEmailPinned && setShowEmail(false)}
+                                    onMouseLeave={() => !isEmailPinnedRef.current && setShowEmail(false)}
                                     onClick={() => {
                                         setIsEmailPinned(!isEmailPinned);
                                         setShowEmail(!isEmailPinned);
@@ -338,7 +347,7 @@ export default function Profile({ author, social, features, researchInterests }:
                                                 if (!isEmailPinned) setShowEmail(true);
                                                 setLastClickedTooltip('email');
                                             }}
-                                            onMouseLeave={() => !isEmailPinned && setShowEmail(false)}
+                                            onMouseLeave={() => !isEmailPinnedRef.current && setShowEmail(false)}
                                         >
                                             <div className="text-center">
                                                 <div className="flex items-center justify-center space-x-2 mb-1">
