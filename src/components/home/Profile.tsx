@@ -287,16 +287,13 @@ export default function Profile({ author, social, features, researchInterests }:
                                             }}
                                             onMouseLeave={() => !isWechatPinnedRef.current && setShowWechat(false)}
                                         >
-                                            <div className="text-center">
-                                                <p className="font-semibold mb-2">WeChat</p>
-                                                {/* eslint-disable-next-line @next/next/no-img-element */}
-                                                <img
-                                                    src={social.wechat_qr}
-                                                    alt="WeChat QR"
-                                                    style={{ width: '320px', height: '320px' }}
-                                                    className="block rounded bg-white"
-                                                />
-                                            </div>
+                                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                                            <img
+                                                src={social.wechat_qr}
+                                                alt="WeChat QR"
+                                                style={{ width: '320px', height: '320px' }}
+                                                className="block rounded bg-white"
+                                            />
                                             <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-neutral-800"></div>
                                         </motion.div>
                                     )}
