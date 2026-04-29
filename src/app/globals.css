@@ -178,6 +178,15 @@ html[data-locale^="zh"] {
 }
 
 
+html,
+body {
+  overscroll-behavior: none;
+}
+
+html {
+  background: var(--background-gradient-to);
+}
+
 body {
   background: linear-gradient(
     to bottom,
