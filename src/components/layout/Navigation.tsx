@@ -240,7 +240,6 @@ export default function Navigation({
                               data-nav-href={href}
                               target="_blank"
                               rel="noopener noreferrer"
-                              {...(/\.pdf(\?|#|$)/i.test(item.href) ? { download: '' } : {})}
                               onMouseEnter={() => setHoveredHref(href)}
                               className={linkClass}
                             >
@@ -334,7 +333,6 @@ export default function Navigation({
                               href={item.href}
                               target="_blank"
                               rel="noopener noreferrer"
-                              {...(/\.pdf(\?|#|$)/i.test(item.href) ? { download: '' } : {})}
                               className={mobileClass}
                             >
                               {item.title}
