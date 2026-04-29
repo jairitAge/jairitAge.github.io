@@ -179,8 +179,10 @@ export default function Profile({ author, social, features, researchInterests }:
                                     }}
                                     onMouseLeave={() => !isAddressPinnedRef.current && setShowAddress(false)}
                                     onClick={() => {
-                                        setIsAddressPinned(!isAddressPinned);
-                                        setShowAddress(!isAddressPinned);
+                                        const next = !isAddressPinnedRef.current;
+                                        isAddressPinnedRef.current = next;
+                                        setIsAddressPinned(next);
+                                        setShowAddress(next);
                                         setLastClickedTooltip('address');
                                     }}
                                     className={`p-2 sm:p-2 transition-colors duration-200 ${isAddressPinned
@@ -256,8 +258,10 @@ export default function Profile({ author, social, features, researchInterests }:
                                     }}
                                     onMouseLeave={() => !isWechatPinnedRef.current && setShowWechat(false)}
                                     onClick={() => {
-                                        setIsWechatPinned(!isWechatPinned);
-                                        setShowWechat(!isWechatPinned);
+                                        const next = !isWechatPinnedRef.current;
+                                        isWechatPinnedRef.current = next;
+                                        setIsWechatPinned(next);
+                                        setShowWechat(next);
                                         setLastClickedTooltip('wechat');
                                     }}
                                     className={`p-2 sm:p-2 transition-colors duration-200 ${isWechatPinned
@@ -317,8 +321,10 @@ export default function Profile({ author, social, features, researchInterests }:
                                     }}
                                     onMouseLeave={() => !isEmailPinnedRef.current && setShowEmail(false)}
                                     onClick={() => {
-                                        setIsEmailPinned(!isEmailPinned);
-                                        setShowEmail(!isEmailPinned);
+                                        const next = !isEmailPinnedRef.current;
+                                        isEmailPinnedRef.current = next;
+                                        setIsEmailPinned(next);
+                                        setShowEmail(next);
                                         setLastClickedTooltip('email');
                                     }}
                                     className={`p-2 sm:p-2 transition-colors duration-200 ${isEmailPinned
