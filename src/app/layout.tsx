@@ -141,12 +141,35 @@ export default function RootLayout({
     lastUpdatedByLocale,
   } = buildLocalizedConfigMaps(targetLocales);
 
+  const siteUrl = (config.site.url || 'https://jairitAge.github.io').replace(/\/$/, '');
+  const personJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: config.author.name,
+    alternateName: '王乾旭',
+    url: siteUrl,
+    image: `${siteUrl}${config.author.avatar}`,
+    jobTitle: config.author.title,
+    affiliation: {
+      '@type': 'CollegeOrUniversity',
+      name: config.author.institution,
+      url: 'https://www.pku.edu.cn/',
+    },
+    knowsAbout: ['Hardware/Software Co-Design', 'AI Acceleration', 'Efficient ML Systems'],
+    email: config.social.email ? `mailto:${config.social.email}` : undefined,
+    sameAs: [config.social.github, config.social.linkedin].filter(Boolean),
+  };
+
   return (
     <html lang={runtimeI18n.defaultLocale} className="scroll-smooth" suppressHydrationWarning>
       <head>
         {config.site.favicon && (
           <link rel="icon" href={config.site.favicon} type="image/svg+xml" />
         )}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+        />
         <script
           dangerouslySetInnerHTML={{
             __html: `
