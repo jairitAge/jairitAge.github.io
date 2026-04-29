@@ -8,7 +8,7 @@ import { getRuntimeI18nConfig } from '@/lib/i18n/config';
 
 interface SectionConfig {
   id: string;
-  type: 'markdown' | 'publications' | 'list';
+  type: 'markdown' | 'publications' | 'list' | 'experience';
   title?: string;
   source?: string;
   filter?: string;
@@ -16,11 +16,21 @@ interface SectionConfig {
   content?: string;
   publications?: Publication[];
   items?: NewsItem[];
+  experience?: ExperienceItem[];
 }
 
 interface NewsItem {
   date: string;
   content: string;
+}
+
+interface ExperienceItem {
+  logo?: string;
+  school: string;
+  location?: string;
+  date?: string;
+  role?: string;
+  advisor?: string;
 }
 
 type PageData =
@@ -53,6 +63,13 @@ function processSections(sections: SectionConfig[], locale?: string): SectionCon
         return {
           ...section,
           items: newsData?.news || [],
+        };
+      }
+      case 'experience': {
+        const expData = section.source ? getTomlContent<{ experience: ExperienceItem[] }>(section.source, locale) : null;
+        return {
+          ...section,
+          experience: expData?.experience || [],
         };
       }
       default:

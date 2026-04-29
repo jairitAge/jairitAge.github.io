@@ -16,8 +16,8 @@ title = "About"
 
 [[sections]]
 id = "experience"
-type = "markdown"
-source = "experience.md"
+type = "experience"
+source = "experience.toml"
 title = "Experience"
 
 [[sections]]

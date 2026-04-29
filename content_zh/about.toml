@@ -16,8 +16,8 @@ title = "关于我"
 
 [[sections]]
 id = "experience"
-type = "markdown"
-source = "experience.md"
+type = "experience"
+source = "experience.toml"
 title = "经历"
 
 [[sections]]
