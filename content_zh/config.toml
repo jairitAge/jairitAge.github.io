@@ -28,12 +28,6 @@ target = "publications"
 href = "/publications"
 
 [[navigation]]
-title = "奖项"
-type = "page"
-target = "awards"
-href = "/awards"
-
-[[navigation]]
 title = "简历"
 type = "page"
 target = "cv"
