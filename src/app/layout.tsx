@@ -13,7 +13,10 @@ export async function generateMetadata(): Promise<Metadata> {
   const runtimeI18n = getRuntimeI18nConfig(config.i18n);
   const openGraphLocale = runtimeI18n.defaultLocale === 'zh' ? 'zh_CN' : 'en_US';
 
+  const siteUrl = config.site.url || 'https://jairitAge.github.io';
+
   return {
+    metadataBase: new URL(siteUrl),
     title: {
       default: config.site.title,
       template: `%s | ${config.site.title}`,
