@@ -44,3 +44,9 @@ title = "博客"
 type = "page"
 target = "blog"
 href = "/blog"
+
+[[navigation]]
+title = "友链"
+type = "page"
+target = "links"
+href = "/links"

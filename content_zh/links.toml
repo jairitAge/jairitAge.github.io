@@ -1,0 +1,8 @@
+type = "links"
+title = "友链"
+description = "导师、合作者与推荐站点。"
+
+[[items]]
+name = "贾天宇"
+affiliation = "北京大学 · AI 加速"
+url = "https://www.tianyuj.com/"

@@ -1,0 +1,8 @@
+type = "links"
+title = "Links"
+description = "Friends, collaborators, and recommended sites."
+
+[[items]]
+name = "Tianyu Jia"
+affiliation = "Peking University · AI Acceleration"
+url = "https://www.tianyuj.com/"
