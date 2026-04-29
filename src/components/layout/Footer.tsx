@@ -35,7 +35,7 @@ export default function Footer({ lastUpdated, lastUpdatedByLocale, defaultLocale
             <img
               src="https://www.clustrmaps.com/map_v2.png?d=O8yCy1ZqyS0B2EIJxnHDBRoE_-qtoy5zcaL18bx2znI&cl=ffffff"
               alt="Visitor map"
-              className="max-w-[240px] h-auto"
+              className="w-full max-w-[480px] h-auto"
               loading="lazy"
             />
           </a>
