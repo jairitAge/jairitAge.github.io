@@ -1,7 +1,6 @@
 [site]
 title = "Qianxu Wang"
 description = "Undergraduate student at Peking University, working on hardware/software co-design and AI acceleration."
-favicon = "/favicon.svg"
 last_updated = "April 29, 2026"
 
 [author]
