@@ -15,13 +15,6 @@ source = "bio.md"
 title = "关于我"
 
 [[sections]]
-id = "featured_publications"
-type = "publications"
-title = "精选论文"
-filter = "selected"
-limit = 5
-
-[[sections]]
 id = "news"
 type = "list"
 title = "动态"
