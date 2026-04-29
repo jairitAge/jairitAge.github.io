@@ -21,6 +21,7 @@ location_details = [
   "Peking University, Beijing, China"
 ]
 github = "https://github.com/jairitAge"
+linkedin = "https://www.linkedin.com/in/qianxu677"
 
 [features]
 # Show a like button on the about page
