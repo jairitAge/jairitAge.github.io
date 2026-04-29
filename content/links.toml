@@ -27,8 +27,8 @@ avatar = "/links/jingxu.jpg"
 title = "Special Links"
 
 [[sections.items]]
-name = "Tianyu Jia"
-affiliation = "PACIFIC Lab"
+name = "PACIFIC Lab"
+affiliation = "Exploring the Blue Ocean of Circuit and AI Architecture."
 url = "https://www.tianyuj.com/"
 avatar = "/links/pacific.png"
 
