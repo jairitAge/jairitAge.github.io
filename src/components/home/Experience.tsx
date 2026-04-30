@@ -27,39 +27,32 @@ export default function Experience({ items, title = 'Experience' }: ExperiencePr
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: 0.2 }}
     >
-      <h2 className="text-2xl font-serif font-bold text-primary mb-4">{title}</h2>
-      <ul className="space-y-6">
+      <h2 className="text-2xl font-serif font-bold text-primary mb-6">{title}</h2>
+      <ul className="divide-y divide-neutral-200/60 dark:divide-neutral-700/40">
         {items.map((item, idx) => (
-          <li key={idx} className="flex items-start gap-4">
+          <li key={idx} className="flex items-center gap-8 sm:gap-12 py-5 sm:py-6">
             {item.logo && (
-              <div className="flex-shrink-0 w-16 h-16 rounded-md overflow-hidden bg-white flex items-center justify-center">
+              <div className="flex-shrink-0 w-20 sm:w-28 flex items-center justify-center">
                 <Image
                   src={item.logo}
                   alt={item.school}
-                  width={64}
-                  height={64}
-                  className="object-contain w-full h-full"
+                  width={112}
+                  height={112}
+                  className="object-contain max-h-16 sm:max-h-24 w-auto h-auto drop-shadow-sm"
                 />
               </div>
             )}
-            <div className="text-neutral-700 dark:text-neutral-600 leading-relaxed">
-              <div className="font-semibold text-primary">
-                {item.school}
-                {item.location && (
-                  <span className="font-normal text-neutral-500 dark:text-neutral-400">
-                    {' · '}
-                    {item.location}
-                  </span>
-                )}
-              </div>
-              {item.date && <div className="text-sm text-neutral-500 dark:text-neutral-400">{item.date}</div>}
-              {item.role && <div>{item.role}</div>}
-              {item.major && (
-                <div className="text-sm text-neutral-600 dark:text-neutral-500">{item.major}</div>
+            <div className="flex-1 min-w-0 text-neutral-700 dark:text-neutral-600 leading-relaxed">
+              <h3 className="text-lg sm:text-xl font-bold text-primary mb-1">{item.school}</h3>
+              {(item.location || item.date) && (
+                <div className="flex justify-between items-baseline gap-3 text-sm text-neutral-500 dark:text-neutral-400 mb-2">
+                  <span>{item.location}</span>
+                  <span className="whitespace-nowrap">{item.date}</span>
+                </div>
               )}
-              {item.advisor && (
-                <div className="text-sm text-neutral-600 dark:text-neutral-500">{item.advisor}</div>
-              )}
+              {item.role && <p className="font-semibold mt-1">{item.role}</p>}
+              {item.major && <p className="mt-1">{item.major}</p>}
+              {item.advisor && <p className="mt-1">{item.advisor}</p>}
             </div>
           </li>
         ))}
