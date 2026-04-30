@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useRef } from 'react';
 import { useLocaleStore } from '@/lib/stores/localeStore';
 import { useMessages } from '@/lib/i18n/useMessages';
 
@@ -12,6 +13,21 @@ interface FooterProps {
 export default function Footer({ lastUpdated, lastUpdatedByLocale, defaultLocale = 'en' }: FooterProps) {
   const locale = useLocaleStore((state) => state.locale);
   const messages = useMessages();
+  const mapRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const container = mapRef.current;
+    if (!container) return;
+    if (container.querySelector('script#clustrmaps')) return;
+
+    const script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.id = 'clustrmaps';
+    script.async = false;
+    script.src =
+      'https://cdn.clustrmaps.com/map_v2.js?cl=ffffff&w=a&t=tt&d=O8yCy1ZqyS0B2EIJxnHDBRoE_-qtoy5zcaL18bx2znI&cmo=ff5353&cmn=ff5353';
+    container.appendChild(script);
+  }, []);
 
   const resolvedLastUpdated =
     lastUpdatedByLocale?.[locale] ||
@@ -24,15 +40,10 @@ export default function Footer({ lastUpdated, lastUpdatedByLocale, defaultLocale
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <div className="flex flex-col items-center gap-3 mb-4">
           <p className="text-xs text-neutral-500">Visitors</p>
-          <div className="w-full max-w-[800px] overflow-hidden">
-            <iframe
-              title="Visitor map"
-              src="https://clustrmaps.com/map_v2.php?cl=ffffff&w=a&t=tt&d=O8yCy1ZqyS0B2EIJxnHDBRoE_-qtoy5zcaL18bx2znI&cmo=ff5353&cmn=ff5353"
-              className="w-full block border-0"
-              style={{ height: 200 }}
-              loading="lazy"
-            />
-          </div>
+          <div
+            ref={mapRef}
+            className="w-full max-w-[800px] overflow-hidden [&_img]:max-w-full [&_img]:h-auto [&_iframe]:max-w-full"
+          />
         </div>
         <div className="flex flex-col sm:flex-row justify-between items-center gap-2">
           <p className="text-xs text-neutral-500">
