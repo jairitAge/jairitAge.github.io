@@ -66,6 +66,12 @@ target = "cv"
 href = "/cv.pdf"
 
 [[navigation]]
+title = "Archive"
+type = "page"
+target = "archive"
+href = "/archive"
+
+[[navigation]]
 title = "Blog"
 type = "page"
 target = "blog"

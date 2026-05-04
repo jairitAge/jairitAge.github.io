@@ -9,6 +9,7 @@ import {
   TextPageConfig,
   CardPageConfig,
   LinksPageConfig,
+  ArchivePageConfig,
 } from '@/types/page';
 
 import { Metadata } from 'next';
@@ -52,6 +53,13 @@ function loadDynamicPageData(slug: string, locale?: string): DynamicPageLocaleDa
     return {
       type: 'links',
       config: pageConfig as LinksPageConfig,
+    };
+  }
+
+  if (pageConfig.type === 'archive') {
+    return {
+      type: 'archive',
+      config: pageConfig as ArchivePageConfig,
     };
   }
 

@@ -34,6 +34,12 @@ target = "cv"
 href = "/cv.pdf"
 
 [[navigation]]
+title = "档案"
+type = "page"
+target = "archive"
+href = "/archive"
+
+[[navigation]]
 title = "博客"
 type = "page"
 target = "blog"

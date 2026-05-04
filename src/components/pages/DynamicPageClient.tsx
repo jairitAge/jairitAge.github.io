@@ -4,12 +4,14 @@ import PublicationsList from '@/components/publications/PublicationsList';
 import TextPage from '@/components/pages/TextPage';
 import CardPage from '@/components/pages/CardPage';
 import LinksPage from '@/components/pages/LinksPage';
+import ArchivePage from '@/components/pages/ArchivePage';
 import { Publication } from '@/types/publication';
 import {
   PublicationPageConfig,
   TextPageConfig,
   CardPageConfig,
   LinksPageConfig,
+  ArchivePageConfig,
 } from '@/types/page';
 import { useLocaleStore } from '@/lib/stores/localeStore';
 
@@ -17,7 +19,8 @@ export type DynamicPageLocaleData =
   | { type: 'publication'; config: PublicationPageConfig; publications: Publication[] }
   | { type: 'text'; config: TextPageConfig; content: string }
   | { type: 'card'; config: CardPageConfig }
-  | { type: 'links'; config: LinksPageConfig };
+  | { type: 'links'; config: LinksPageConfig }
+  | { type: 'archive'; config: ArchivePageConfig };
 
 interface DynamicPageClientProps {
   dataByLocale: Record<string, DynamicPageLocaleData>;
@@ -46,6 +49,9 @@ export default function DynamicPageClient({ dataByLocale, defaultLocale }: Dynam
       )}
       {pageData.type === 'links' && (
         <LinksPage config={pageData.config} />
+      )}
+      {pageData.type === 'archive' && (
+        <ArchivePage config={pageData.config} />
       )}
     </div>
   );

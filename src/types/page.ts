@@ -1,5 +1,5 @@
 export interface BasePageConfig {
-    type: 'about' | 'publication' | 'card' | 'text' | 'links';
+    type: 'about' | 'publication' | 'card' | 'text' | 'links' | 'archive';
     title: string;
     description?: string;
 }
@@ -47,4 +47,19 @@ export interface LinksPageConfig extends BasePageConfig {
     type: 'links';
     items?: LinkItem[];
     sections?: LinksSection[];
+}
+
+export interface ArchiveItem {
+    title: string;
+    authors?: string;
+    venue?: string;
+    date?: string;
+    tags?: string[];
+    summary?: string;
+    link?: string;
+}
+
+export interface ArchivePageConfig extends BasePageConfig {
+    type: 'archive';
+    items: ArchiveItem[];
 }

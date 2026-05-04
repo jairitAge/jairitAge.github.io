@@ -42,6 +42,10 @@ export interface LocaleMessages {
     bibtex: string;
     code: string;
   };
+  archive: {
+    searchPlaceholder: string;
+    noResults: string;
+  };
   footer: {
     lastUpdated: string;
     builtWithPrism: string;
@@ -92,6 +96,10 @@ const en: LocaleMessages = {
     bibtex: 'BibTeX',
     code: 'Code',
   },
+  archive: {
+    searchPlaceholder: 'Search by title, author, venue, tag, or summary...',
+    noResults: 'No entries match your search.',
+  },
   footer: {
     lastUpdated: 'Last updated',
     builtWithPrism: 'Built with PRISM',
@@ -141,6 +149,10 @@ const zh: LocaleMessages = {
     abstract: '摘要',
     bibtex: 'BibTeX',
     code: '代码',
+  },
+  archive: {
+    searchPlaceholder: '按标题、作者、会议、标签或摘要搜索…',
+    noResults: '没有匹配的条目。',
   },
   footer: {
     lastUpdated: '最近更新',

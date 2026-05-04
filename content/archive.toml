@@ -1,0 +1,19 @@
+type = "archive"
+title = "Archive"
+description = "A collection of papers I've read and notes I've written. Use the search box to filter by title, authors, venue, tags, or summary."
+
+[[items]]
+title = "Attention Is All You Need"
+authors = "Vaswani et al."
+venue = "NeurIPS 2017"
+date = "2017"
+tags = ["Transformer", "NLP", "Foundational"]
+summary = "Placeholder entry. Introduces the Transformer architecture based purely on attention mechanisms, removing recurrence and convolutions."
+link = "https://arxiv.org/abs/1706.03762"
+
+[[items]]
+title = "Placeholder Note"
+authors = "Qianxu Wang"
+date = "2026-04"
+tags = ["Notes"]
+summary = "This is a placeholder note. Replace with real reading notes or summaries."
