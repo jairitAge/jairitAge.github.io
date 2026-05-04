@@ -67,3 +67,20 @@ export function getTomlContent<T>(filename: string, locale?: string): T | null {
 export function getPageConfig<T = unknown>(pageName: string, locale?: string): T | null {
   return getTomlContent<T>(`${pageName}.toml`, locale);
 }
+
+export function getLocalizedPageConfig<T = unknown>(pageName: string, locale: string): T | null {
+  const filePath = path.join(
+    process.cwd(),
+    `${DEFAULT_CONTENT_DIR}_${normalizeLocale(locale)}`,
+    `${pageName}.toml`
+  );
+  try {
+    const content = fs.readFileSync(filePath, 'utf-8');
+    return parse(content) as unknown as T;
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code !== 'ENOENT') {
+      console.error(`Error loading localized file ${filePath}:`, error);
+    }
+    return null;
+  }
+}

@@ -1,6 +1,6 @@
 type = "archive"
-title = "档案"
-description = "我读过的一些文章和总结。可以通过下方搜索框按标题、作者、会议、标签或摘要进行筛选。"
+title = "Archive"
+description = "A collection of papers I've read and notes I've written. Use the search box to filter by title, authors, venue, tags, or summary."
 
 [[items]]
 title = "Attention Is All You Need"

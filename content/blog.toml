@@ -1,6 +1,6 @@
 type = "card"
-title = "博客"
-description = "生活与工作中的随笔与杂记。"
+title = "Blog"
+description = "Random thoughts and notes from life and work."
 
 [[items]]
 title = "一人食火锅 😋"

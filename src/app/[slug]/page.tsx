@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { getPageConfig, getMarkdownContent, getBibtexContent } from '@/lib/content';
+import { getPageConfig, getMarkdownContent, getBibtexContent, getLocalizedPageConfig } from '@/lib/content';
 import { getConfig } from '@/lib/config';
 import { parseBibTeX } from '@/lib/bibtexParser';
 import DynamicPageClient, { type DynamicPageLocaleData } from '@/components/pages/DynamicPageClient';
@@ -17,13 +17,30 @@ import { getRuntimeI18nConfig } from '@/lib/i18n/config';
 
 const LOCALE_AGNOSTIC_SLUGS = new Set(['blog', 'archive']);
 
+function applyLocalizedChrome<T extends BasePageConfig>(slug: string, base: T, locale?: string): T {
+  if (!locale || !LOCALE_AGNOSTIC_SLUGS.has(slug)) {
+    return base;
+  }
+  const localized = getLocalizedPageConfig<Partial<BasePageConfig>>(slug, locale);
+  if (!localized) {
+    return base;
+  }
+  return {
+    ...base,
+    ...(localized.title ? { title: localized.title } : {}),
+    ...(localized.description !== undefined ? { description: localized.description } : {}),
+  };
+}
+
 function loadDynamicPageData(slug: string, locale?: string): DynamicPageLocaleData | null {
   const effectiveLocale = LOCALE_AGNOSTIC_SLUGS.has(slug) ? undefined : locale;
-  const pageConfig = getPageConfig(slug, effectiveLocale) as BasePageConfig | null;
+  const rawConfig = getPageConfig(slug, effectiveLocale) as BasePageConfig | null;
 
-  if (!pageConfig) {
+  if (!rawConfig) {
     return null;
   }
+
+  const pageConfig = applyLocalizedChrome(slug, rawConfig, locale);
 
   if (pageConfig.type === 'publication') {
     const pubConfig = pageConfig as PublicationPageConfig;
