@@ -15,8 +15,11 @@ import {
 import { Metadata } from 'next';
 import { getRuntimeI18nConfig } from '@/lib/i18n/config';
 
+const LOCALE_AGNOSTIC_SLUGS = new Set(['blog', 'archive']);
+
 function loadDynamicPageData(slug: string, locale?: string): DynamicPageLocaleData | null {
-  const pageConfig = getPageConfig(slug, locale) as BasePageConfig | null;
+  const effectiveLocale = LOCALE_AGNOSTIC_SLUGS.has(slug) ? undefined : locale;
+  const pageConfig = getPageConfig(slug, effectiveLocale) as BasePageConfig | null;
 
   if (!pageConfig) {
     return null;
@@ -24,17 +27,17 @@ function loadDynamicPageData(slug: string, locale?: string): DynamicPageLocaleDa
 
   if (pageConfig.type === 'publication') {
     const pubConfig = pageConfig as PublicationPageConfig;
-    const bibtex = getBibtexContent(pubConfig.source, locale);
+    const bibtex = getBibtexContent(pubConfig.source, effectiveLocale);
     return {
       type: 'publication',
       config: pubConfig,
-      publications: parseBibTeX(bibtex, locale),
+      publications: parseBibTeX(bibtex, effectiveLocale),
     };
   }
 
   if (pageConfig.type === 'text') {
     const textConfig = pageConfig as TextPageConfig;
-    const content = getMarkdownContent(textConfig.source, locale);
+    const content = getMarkdownContent(textConfig.source, effectiveLocale);
     return {
       type: 'text',
       config: textConfig,
