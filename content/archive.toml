@@ -3,6 +3,16 @@ title = "Archive"
 description = "A collection of papers I've read and notes I've written. Use the search box to filter by title, authors, venue, tags, or summary."
 
 [[items]]
+slug = "agent-xpu"
+title = "Agent.xpu: 个人设备 SoC 上的 LLM Agent 协同推理"
+authors = "北京大学"
+venue = "2026"
+date = "2026"
+tags = ["NPU", "AI Acceleration", "LLM Serving", "SoC", "调度", "系统优化"]
+summary = "面向手机 / 笔电这类 SoC 设备上的 LLM Agent 推理。reactive 任务（用户主动发起，要求低延迟）和 proactive 任务（后台运行，要求高吞吐）必须共享同一块 SoC 上的 CPU / NPU / iGPU 三种计算单元。论文用 HEG + Stage Elasticity + 细粒度抢占 + 余量搭载这一整套机制，把操作系统级的进程调度思想搬到片上 LLM 推理：reactive 类比实时进程，proactive 类比后台进程，NPU 和 iGPU 类比两种特性不同的处理器核。"
+link = ""
+
+[[items]]
 slug = "kvflow"
 title = "KVFlow: Efficient Prefix Caching for Accelerating LLM-Based Multi-Agent Workflows"
 authors = "Zaifeng Pan, Ajjkumar Patel, Zhengding Hu 等"
