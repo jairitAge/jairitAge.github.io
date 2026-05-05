@@ -2,9 +2,9 @@
 
 多 agent workflow 现在很多是这种形态：一组角色固定、prompt 也固定的 agent，按某种调度依次（或并发）调一个 LLM 服务。每个 agent 那段长 prompt 是反复用的，所以推理系统普遍上 prefix cache（vLLM、SGLang 都是 radix tree）来跨调用复用 KV，省掉重复 prefill。
 
-但 cache 满了要踢东西，默认是 LRU——只看「上一次什么时候用过」。问题是，多 agent workflow 的执行顺序常常是可以预测的，下一步要跑谁基本就摆在那里。于是 LRU 在这里会做出非常蠢的决定：
+但 cache 满了要淘汰一些条目，默认策略是 LRU——只看「上一次什么时候用过」。问题是，多 agent workflow 的执行顺序常常是可以预测的，下一步要跑谁基本就摆在那里。于是 LRU 在这里会做出明显错误的决定：
 
-论文那个例子很直观，`Planner → Executor → Expresser → Reviewer` 循环。Executor 刚跑完那一刻，Expresser 是这一轮里最早被访问的，按 LRU 它「最久没用」会被踢；但下一步要跑的恰恰是 Expresser，结果必然 miss，又得重新 prefill 一大段固定 prompt。
+论文那个例子很直观，`Planner → Executor → Expresser → Reviewer` 循环。Executor 刚跑完那一刻，Expresser 是这一轮里最早被访问的，按 LRU 它「最久没用」会被淘汰；但下一步要跑的恰恰是 Expresser，结果必然 miss，又得重新 prefill 一大段固定 prompt。
 
 ## 那为什么之前一直用 LRU
 
@@ -16,11 +16,11 @@
 
 ## 怎么做的
 
-三件事，名字听起来挺花，本质都不复杂。
+三件事，听起来很复杂，本质都不难。
 
 **Agent Step Graph + steps-to-execution（STE）**。把 workflow 抽成图，每个 agent 算一个数值——它距离下次激活还有几步。STE 越小越值得留下。带分支的话：OR（哪个先完都行）取 min，AND（必须都完成）取 max。
 
-**节点级的淘汰**。prefix cache 是 radix tree，多个 agent 之间会共享前缀。KVFlow 不是给整段 prompt 打一个分，而是把 STE 下沉到树上每个节点。共享节点取最保守的值（只要还有一个 agent 即将用就不能踢）；私有后缀按各自的 STE 走；每次都不一样的动态后缀几乎用不上，最先踢。
+**节点级的淘汰**。prefix cache 是 radix tree，多个 agent 之间会共享前缀。KVFlow 不是给整段 prompt 打一个分，而是把 STE 下沉到树上每个节点。共享节点取最保守的值（只要还有一个 agent 即将用就不能淘汰）；私有后缀按各自的 STE 走；每次都不一样的动态后缀几乎用不上，最先淘汰。
 
 **全异步 prefetch + 状态感知调度**。下一步要用、当前不在 GPU 的 KV，后台线程提前从 CPU 搬上去。GPU 算 forward 用的是算力 + GPU→CPU 的输出 token 通道，prefetch 用的是 CPU→GPU 方向，PCIe 全双工互不干扰。每个 KV 节点有四态（在 GPU / CPU 备份 / loading / offloading），调度器看到要用的节点还在 loading 就先跳过这个请求，去跑别的已就绪的——避免「选中→等 PCIe→GPU 空转」这种流水线断裂。
 
@@ -51,23 +51,11 @@ KVFlow 的 proactive prefetch + 状态感知调度，正好把这两点都解决
 
 我觉得论文最聪明的地方其实不是它的加速比，而是它把 HiCache 拿来当 baseline——这逼着读者直面「为什么加一层 CPU 缓存反而更慢」。这个 negative result 比 1.83× / 2.19× 那两个数字记得更牢。
 
-## 用 L / A / C 标一下位置
-
-按 ColAgent / Survey 那套分类来定位的话：
-
-KVFlow 自己是 **L4 serving infrastructure**，但它特别的地方是向上越过了 L0/L1 边界拿语义信息——Agent Step Graph 本质就是把 L0/L1 的 coordination state 漏给 L4 cache 管理用。这正好是 Survey 里说现有引擎缺少的那种 coordination-state-aware 组件的雏形。
-
-服务的上层应用主要是 **C4（Ledger-driven dispatch）**，比如 Magentic-One 那种 Orchestrator 每步选一个 agent 激活的结构——STE 在这种结构上预测最有效。也部分覆盖 **C1（同步扇出）**，靠 max 聚合处理 AND barrier；但 C1 真正难的「Spawn Burst」并不是 KVFlow 的核心目标。**C2（事件驱动异步）**几乎不适用，未来激活时间不确定，STE 没法估。
-
-A-axes 不太适合直接套——A1–A4 是用来描述 Orchestrator 设计的，KVFlow 是服务系统不是 Orchestrator。但反过来看，A2 / A3 决定了 KVFlow 能从上层拿到多少有用信息：共享 prompt 越多、派生越规整，KVFlow 收益越大。
-
-一句话：L4 infra，主战场 C4，捎带 C1，靠从 L0/L1 拿语义信号反哺 L4。
-
 ## 还没想清楚的几件事
 
 记一些我自己没想透的、之后想接着挖的方向，未必都对：
 
-- STE 的预测精度问题。在确定性 workflow 里 STE 是精确值，但很多场景下下一步执行哪个 agent 是 LLM 自己决定的（router 或 planner），STE 就只能是预测。错预测的代价是多大？要不要搞个类似分支预测器的东西？感觉这是这套方法走出 demo 场景之后会先碰到的坑。
+- STE 的预测精度问题。在确定性 workflow 里 STE 是精确值，但很多场景下，下一步执行哪个 agent 是 LLM 自己决定的（router 或 planner），STE 就只能是预测值。错预测的代价是多大？要不要做一个类似分支预测器的机制？感觉这是这套方法走出 demo 场景之后会先碰到的问题。
 - 和 disaggregated KV 的关系。现在 KV 普遍分层放 GPU HBM、CPU DRAM、有的还放 NVMe 或远端节点（Mooncake 那种）。KVFlow 的预取本质是在 hierarchy 上做软件流水。再叠一层 disaggregated pool，调度感知能不能继续吃到收益？应该能，但具体怎么做没想清楚。
 - 硬件上有没有可借鉴的。从体系结构角度，这其实就是把 cache 替换从 LRU 换成 lookahead / hint-based prefetcher——CPU 那边早就这么干了。如果做芯片侧的 KV controller（HBM 控制器、CXL 之类的），调度图作为 hint 走专门指令通道下发，可能是个具体的「系统/硬件协同」抓手，不过这个想法挺粗糙，没具体想过怎么落地。
 - 能不能扩展到非 agent 场景。RAG、长 context 检索增强里也有「哪些前缀块更可能复用」的判断。如果有访问历史 + 任务结构应该可以泛化，只是 STE 的来源不再是显式调度图，而是一个学到的预测器。这条不知道有没有人做过。
