@@ -50,10 +50,12 @@ export interface LinksPageConfig extends BasePageConfig {
 }
 
 export interface ArchiveItem {
+    slug?: string;
     title: string;
     authors?: string;
     venue?: string;
     date?: string;
+    location?: string;
     tags?: string[];
     summary?: string;
     link?: string;

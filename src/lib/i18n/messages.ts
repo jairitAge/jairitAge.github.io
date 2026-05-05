@@ -45,6 +45,14 @@ export interface LocaleMessages {
   archive: {
     searchPlaceholder: string;
     noResults: string;
+    backToArchive: string;
+    viewSource: string;
+    noNotesYet: string;
+    authors: string;
+    venue: string;
+    location: string;
+    date: string;
+    tags: string;
   };
   footer: {
     lastUpdated: string;
@@ -99,6 +107,14 @@ const en: LocaleMessages = {
   archive: {
     searchPlaceholder: 'Search by title, author, venue, tag, or summary...',
     noResults: 'No entries match your search.',
+    backToArchive: 'Back to Archive',
+    viewSource: 'View source',
+    noNotesYet: 'Notes coming soon.',
+    authors: 'Authors',
+    venue: 'Venue',
+    location: 'Location',
+    date: 'Date',
+    tags: 'Tags',
   },
   footer: {
     lastUpdated: 'Last updated',
@@ -153,6 +169,14 @@ const zh: LocaleMessages = {
   archive: {
     searchPlaceholder: '按标题、作者、会议、标签或摘要搜索…',
     noResults: '没有匹配的条目。',
+    backToArchive: '返回归档',
+    viewSource: '查看原文',
+    noNotesYet: '笔记即将上线。',
+    authors: '作者',
+    venue: '发表',
+    location: '地点',
+    date: '日期',
+    tags: '标签',
   },
   footer: {
     lastUpdated: '最近更新',

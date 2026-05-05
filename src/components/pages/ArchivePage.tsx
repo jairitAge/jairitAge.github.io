@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { MagnifyingGlassIcon, ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline';
 import ReactMarkdown from 'react-markdown';
@@ -32,13 +33,57 @@ function itemMatches(item: ArchiveItem, query: string): boolean {
         item.authors,
         item.venue,
         item.date,
+        item.location,
         item.summary,
         ...(item.tags || []),
     ]
         .filter(Boolean)
-        .join('  ')
+        .join('  ')
         .toLowerCase();
     return haystack.includes(q);
+}
+
+function ArchiveCardInner({ item }: { item: ArchiveItem }) {
+    return (
+        <>
+            <div className="flex justify-between items-start mb-1.5 gap-3">
+                <h3 className="text-lg font-semibold text-primary leading-snug group-hover:text-accent transition-colors">
+                    {item.title}
+                </h3>
+                {item.date && (
+                    <span className="text-sm text-neutral-500 font-medium bg-neutral-100 dark:bg-neutral-800 px-2 py-1 rounded whitespace-nowrap">
+                        {item.date}
+                    </span>
+                )}
+            </div>
+            {(item.authors || item.venue) && (
+                <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-2">
+                    {item.authors}
+                    {item.authors && item.venue && <span className="mx-1.5">·</span>}
+                    {item.venue && <span className="italic">{item.venue}</span>}
+                </p>
+            )}
+            {item.summary && (
+                <div className="text-base text-neutral-600 dark:text-neutral-500 leading-relaxed">
+                    <ReactMarkdown components={markdownComponents}>
+                        {item.summary}
+                    </ReactMarkdown>
+                </div>
+            )}
+            {item.tags && item.tags.length > 0 && (
+                <div className="flex flex-wrap gap-2 mt-3">
+                    {item.tags.map((tag) => (
+                        <span
+                            key={tag}
+                            className="text-xs text-neutral-500 bg-neutral-50 dark:bg-neutral-800/50 px-2 py-1 rounded border border-neutral-100 dark:border-neutral-800"
+                        >
+                            {tag}
+                        </span>
+                    ))}
+                </div>
+            )}
+        </>
+    );
 }
 
 export default function ArchivePage({ config }: { config: ArchivePageConfig }) {
@@ -83,60 +128,32 @@ export default function ArchivePage({ config }: { config: ArchivePageConfig }) {
             <div className="grid gap-4">
                 {filtered.map((item, index) => (
                     <motion.div
-                        key={`${item.title}-${index}`}
+                        key={`${item.slug || item.title}-${index}`}
                         initial={{ opacity: 0, y: 12 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.3, delay: Math.min(0.05 * index, 0.3) }}
-                        className="bg-white dark:bg-neutral-900 rounded-xl shadow-sm border border-neutral-200 dark:border-neutral-800 hover:shadow-lg transition-all duration-200 hover:scale-[1.005] p-5"
+                        className="group relative bg-white dark:bg-neutral-900 rounded-xl shadow-sm border border-neutral-200 dark:border-neutral-800 transition-all duration-200 p-5 hover:shadow-lg hover:border-accent/40 hover:scale-[1.005]"
                     >
-                        <div className="flex justify-between items-start mb-1.5 gap-3">
-                            <h3 className="text-lg font-semibold text-primary leading-snug">
-                                {item.link ? (
-                                    <a
-                                        href={item.link}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="inline-flex items-center gap-1.5 hover:text-accent transition-colors"
-                                    >
-                                        {item.title}
-                                        <ArrowTopRightOnSquareIcon className="h-4 w-4 opacity-60" />
-                                    </a>
-                                ) : (
-                                    item.title
-                                )}
-                            </h3>
-                            {item.date && (
-                                <span className="text-sm text-neutral-500 font-medium bg-neutral-100 dark:bg-neutral-800 px-2 py-1 rounded whitespace-nowrap">
-                                    {item.date}
-                                </span>
-                            )}
-                        </div>
-                        {(item.authors || item.venue) && (
-                            <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-2">
-                                {item.authors}
-                                {item.authors && item.venue && <span className="mx-1.5">·</span>}
-                                {item.venue && <span className="italic">{item.venue}</span>}
-                            </p>
+                        {item.slug && (
+                            <Link
+                                href={`/archive/${item.slug}`}
+                                aria-label={item.title}
+                                className="absolute inset-0 z-10 rounded-xl focus:outline-none focus:ring-2 focus:ring-accent/40"
+                            />
                         )}
-                        {item.summary && (
-                            <div className="text-base text-neutral-600 dark:text-neutral-500 leading-relaxed">
-                                <ReactMarkdown components={markdownComponents}>
-                                    {item.summary}
-                                </ReactMarkdown>
-                            </div>
+                        {item.link && (
+                            <a
+                                href={item.link}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label={t.archive.viewSource}
+                                title={t.archive.viewSource}
+                                className="absolute top-4 right-4 z-20 text-neutral-400 hover:text-accent transition-colors"
+                            >
+                                <ArrowTopRightOnSquareIcon className="h-4 w-4" />
+                            </a>
                         )}
-                        {item.tags && item.tags.length > 0 && (
-                            <div className="flex flex-wrap gap-2 mt-3">
-                                {item.tags.map((tag) => (
-                                    <span
-                                        key={tag}
-                                        className="text-xs text-neutral-500 bg-neutral-50 dark:bg-neutral-800/50 px-2 py-1 rounded border border-neutral-100 dark:border-neutral-800"
-                                    >
-                                        {tag}
-                                    </span>
-                                ))}
-                            </div>
-                        )}
+                        <ArchiveCardInner item={item} />
                     </motion.div>
                 ))}
 

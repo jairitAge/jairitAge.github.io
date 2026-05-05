@@ -68,6 +68,20 @@ export function getPageConfig<T = unknown>(pageName: string, locale?: string): T
   return getTomlContent<T>(`${pageName}.toml`, locale);
 }
 
+export function getArchiveBody(slug: string, locale?: string): string | null {
+  const candidates = getCandidateFilePaths(path.join('archive', `${slug}.md`), locale);
+  for (const filePath of candidates) {
+    try {
+      return fs.readFileSync(filePath, 'utf-8');
+    } catch (error) {
+      if ((error as NodeJS.ErrnoException).code !== 'ENOENT') {
+        console.error(`Error loading archive note ${filePath}:`, error);
+      }
+    }
+  }
+  return null;
+}
+
 export function getLocalizedPageConfig<T = unknown>(pageName: string, locale: string): T | null {
   const filePath = path.join(
     process.cwd(),
