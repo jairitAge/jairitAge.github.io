@@ -5,7 +5,7 @@ export const dynamic = 'force-static';
 
 export default function robots(): MetadataRoute.Robots {
   const config = getConfig();
-  const base = (config.site.url || 'https://jairitAge.github.io').replace(/\/$/, '');
+  const base = (config.site.url || 'https://jairitage.github.io').replace(/\/$/, '');
 
   return {
     rules: [

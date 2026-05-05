@@ -13,7 +13,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const runtimeI18n = getRuntimeI18nConfig(config.i18n);
   const openGraphLocale = runtimeI18n.defaultLocale === 'zh' ? 'zh_CN' : 'en_US';
 
-  const siteUrl = config.site.url || 'https://jairitAge.github.io';
+  const siteUrl = config.site.url || 'https://jairitage.github.io';
 
   return {
     metadataBase: new URL(siteUrl),
@@ -141,7 +141,7 @@ export default function RootLayout({
     lastUpdatedByLocale,
   } = buildLocalizedConfigMaps(targetLocales);
 
-  const siteUrl = (config.site.url || 'https://jairitAge.github.io').replace(/\/$/, '');
+  const siteUrl = (config.site.url || 'https://jairitage.github.io').replace(/\/$/, '');
   const personJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Person',
