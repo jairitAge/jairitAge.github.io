@@ -3,20 +3,11 @@ title = "Archive"
 description = "A collection of papers I've read and notes I've written. Use the search box to filter by title, authors, venue, tags, or summary."
 
 [[items]]
-slug = "attention-is-all-you-need"
-title = "Attention Is All You Need"
-authors = "Vaswani 等"
-venue = "NeurIPS 2017"
-date = "2017"
-tags = ["Transformer", "自然语言处理", "经典论文"]
-summary = "占位条目。提出了完全基于注意力机制的 Transformer 架构，去除了循环和卷积结构。"
-link = "https://arxiv.org/abs/1706.03762"
-
-[[items]]
-slug = "placeholder-note"
-title = "占位笔记"
-authors = "王乾旭"
-date = "2026-04"
-location = "中国 北京"
-tags = ["笔记"]
-summary = "这是一个占位笔记，后续会替换为真实的阅读笔记或总结。"
+slug = "kvflow"
+title = "KVFlow: Efficient Prefix Caching for Accelerating LLM-Based Multi-Agent Workflows"
+authors = "Zaifeng Pan, Ajjkumar Patel, Zhengding Hu 等"
+venue = "NeurIPS 2025"
+date = "2025-07"
+tags = ["KV Cache", "LLM Serving", "多智能体", "系统优化", "调度"]
+summary = "面向多智能体 workflow 的 KV cache 管理框架。作者指出，LRU 在 agentic 场景下会把「马上要被复用」的前缀缓存早早淘汰，于是提出用 Agent Step Graph 估计每个 agent 距离下一次激活还差几步，再据此做细粒度的节点级淘汰，并叠加 CPU→GPU 的全异步预取，最终在 SGLang hierarchical radix cache 上拿到 1.83×–2.19× 的端到端加速。"
+link = "https://arxiv.org/abs/2507.07400"
