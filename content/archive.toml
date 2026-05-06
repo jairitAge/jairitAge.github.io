@@ -3,6 +3,16 @@ title = "Archive"
 description = "A collection of papers I've read and notes I've written. Use the search box to filter by title, authors, venue, tags, or summary."
 
 [[items]]
+slug = "dualpath"
+title = "DualPath: Breaking the Storage Bandwidth Bottleneck in Agentic LLM Inference"
+authors = "北大 / 清华 / DeepSeek 联合"
+venue = "arXiv 2025"
+date = "2025-09"
+tags = ["KV Cache", "LLM Serving", "PD 分离", "存储带宽", "RDMA", "系统优化"]
+summary = "面向 PD 分离架构下的 Agentic LLM 推理。论文指出在 Agent 场景下 KV-Cache 的 I/O 而非计算成为新瓶颈，而每个节点只配一个存储网卡（SNIC），且 Prefill 节点的 SNIC 被打满、Decode 节点的 SNIC 几乎闲置。DualPath 让 DE 的 SNIC 也参与读 KV-Cache，再通过计算网络（CNIC）传给 PE，配合 layerwise prefill、基于 InfiniBand Virtual Lane 的流量隔离以及动态调度，把可用存储带宽从 P×sB 拉到 (P+D)×sB。在线场景吞吐 2.25×，离线 1.87×，能扩到 1152 GPU。"
+link = "https://arxiv.org/abs/2602.21548"
+
+[[items]]
 slug = "agent-xpu"
 title = "Agent.xpu: Efficient Scheduling of Agentic LLM Workloads on Heterogeneous SoC"
 authors = "Xinming Wei, Jiahao Zhang, Haoran Li 等（北京大学）"
