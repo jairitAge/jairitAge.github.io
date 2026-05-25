@@ -3,6 +3,13 @@ title = "Blog"
 description = "Random thoughts and notes from life and work."
 
 [[items]]
+title = "参加 ISCAS 2026"
+image = "/blog/iscas-2026.jpg"
+date = "2026-05-25"
+location = "中国 上海"
+content = "参加 ISCAS 2026"
+
+[[items]]
 title = "一人食火锅 😋"
 image = "/blog/hotpot.jpg"
 date = "2026-04-25"
