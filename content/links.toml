@@ -23,6 +23,11 @@ affiliation = "上士闻道, 勤而行之."
 url = "https://iculizhi.github.io/"
 avatar = "/links/jingxu.jpg"
 
+[[sections.items]]
+name = "AAA WUNDER"
+affiliation = "应用物理学 | 通信 | 视频创作 | 公众号运营 | 摄影 | 心理学 | 哲学"
+url = "https://hv-skewer.github.io/hv-skewer/"
+
 [[sections]]
 title = "Special Links"
 
