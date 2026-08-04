@@ -28,7 +28,6 @@ export interface VisitorStats {
   };
   points: VisitorPoint[];
   topCountries: Array<{ country: string; n: number; cities: number }>;
-  topCities: Array<{ city: string; country: string | null; n: number }>;
   recent: RecentVisit[];
 }
 

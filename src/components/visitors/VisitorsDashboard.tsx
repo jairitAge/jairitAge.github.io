@@ -77,7 +77,6 @@ export default function VisitorsDashboard({ endpoint }: { endpoint?: string }) {
   }
 
   const maxCountry = stats.topCountries[0]?.n ?? 0;
-  const maxCity = stats.topCities[0]?.n ?? 0;
 
   return (
     <motion.div
@@ -100,6 +99,8 @@ export default function VisitorsDashboard({ endpoint }: { endpoint?: string }) {
         <p className="mt-2 text-xs text-neutral-500">{labels.mapNote}</p>
       </section>
 
+      {/* Countries and the recent feed sit side by side: one ranking on its own
+          would stretch a 40-character label row across the full page width. */}
       <div className="grid gap-8 lg:grid-cols-2">
         <section>
           <h2 className="mb-3 text-sm font-semibold text-primary">{labels.topCountries}</h2>
@@ -118,35 +119,18 @@ export default function VisitorsDashboard({ endpoint }: { endpoint?: string }) {
         </section>
 
         <section>
-          <h2 className="mb-3 text-sm font-semibold text-primary">{labels.topCities}</h2>
-          {stats.topCities.length === 0 ? (
+          <h2 className="mb-3 text-sm font-semibold text-primary">{labels.recentVisitors}</h2>
+          {stats.recent.length === 0 ? (
             <p className="text-sm text-neutral-500">{labels.empty}</p>
           ) : (
-            stats.topCities.map((row) => (
-              <RankRow
-                key={`${row.city}-${row.country}`}
-                label={row.city}
-                sub={row.country ? countryName(row.country) : undefined}
-                value={row.n}
-                max={maxCity}
-              />
-            ))
+            <div className="rounded-xl border border-neutral-200 px-4 py-1">
+              {stats.recent.map((visit, index) => (
+                <RecentRow key={`${visit.ts}-${index}`} visit={visit} unknown={labels.unknownLocation} />
+              ))}
+            </div>
           )}
         </section>
       </div>
-
-      <section>
-        <h2 className="mb-3 text-sm font-semibold text-primary">{labels.recentVisitors}</h2>
-        {stats.recent.length === 0 ? (
-          <p className="text-sm text-neutral-500">{labels.empty}</p>
-        ) : (
-          <div className="rounded-xl border border-neutral-200 px-4 py-1">
-            {stats.recent.map((visit, index) => (
-              <RecentRow key={`${visit.ts}-${index}`} visit={visit} unknown={labels.unknownLocation} />
-            ))}
-          </div>
-        )}
-      </section>
     </motion.div>
   );
 }

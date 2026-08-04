@@ -70,7 +70,6 @@ export interface LocaleMessages {
     mapTitle: string;
     mapNote: string;
     topCountries: string;
-    topCities: string;
     visitsFrom: string;
     citiesSuffix: string;
     unavailable: string;
@@ -153,7 +152,6 @@ const en: LocaleMessages = {
     mapNote:
       'Each dot is a city, sized by visit count. Locations are guessed from the IP address, so they point at a network rather than a person — a VPN or mobile carrier can put a visitor in the wrong city entirely.',
     topCountries: 'Top countries',
-    topCities: 'Top cities',
     visitsFrom: 'visits from',
     citiesSuffix: 'cities',
     unavailable: 'Visitor stats are unavailable right now.',
