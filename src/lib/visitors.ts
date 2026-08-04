@@ -10,6 +10,14 @@ export interface VisitorPoint {
   country: string | null;
 }
 
+export interface RecentVisit {
+  city: string | null;
+  region: string | null;
+  country: string | null;
+  /** Unix seconds. */
+  ts: number;
+}
+
 export interface VisitorStats {
   totals: {
     visits: number;
@@ -21,6 +29,7 @@ export interface VisitorStats {
   points: VisitorPoint[];
   topCountries: Array<{ country: string; n: number; cities: number }>;
   topCities: Array<{ city: string; country: string | null; n: number }>;
+  recent: RecentVisit[];
 }
 
 /** Records this visit, then loads the aggregates. */
@@ -77,4 +86,29 @@ export function countryName(code: string): string {
   } catch {
     return code;
   }
+}
+
+/**
+ * "US" → "🇺🇸". Regional indicator symbols sit at a fixed offset from A-Z, so the
+ * flag for any ISO country code is just its two letters shifted into that block.
+ */
+export function countryFlag(code: string | null): string {
+  if (!code || code.length !== 2 || !/^[a-z]{2}$/i.test(code)) return '🏳️';
+  const base = 0x1f1e6 - 'A'.charCodeAt(0);
+  return String.fromCodePoint(...[...code.toUpperCase()].map((c) => base + c.charCodeAt(0)));
+}
+
+/** Unix seconds → "just now" / "12m ago" / "3h ago" / "5d ago". */
+export function timeAgo(ts: number, now: number = Date.now() / 1000): string {
+  const seconds = Math.max(0, Math.floor(now - ts));
+  if (seconds < 60) return 'just now';
+  const minutes = Math.floor(seconds / 60);
+  if (minutes < 60) return `${minutes}m ago`;
+  const hours = Math.floor(minutes / 60);
+  if (hours < 24) return `${hours}h ago`;
+  const days = Math.floor(hours / 24);
+  if (days < 30) return `${days}d ago`;
+  const months = Math.floor(days / 30);
+  if (months < 12) return `${months}mo ago`;
+  return `${Math.floor(months / 12)}y ago`;
 }

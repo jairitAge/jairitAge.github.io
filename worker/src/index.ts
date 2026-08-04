@@ -24,6 +24,8 @@ const SESSION_WINDOW_SECONDS = 30 * 60;
 /** Caps on what /stats returns, so one popular city cannot balloon the payload. */
 const MAX_POINTS = 2000;
 const MAX_RANKS = 20;
+/** Length of the "recent visitors" feed. */
+const MAX_RECENT = 15;
 
 /** How long browsers and the edge may reuse a /stats response. */
 const STATS_CACHE_SECONDS = 60;
@@ -110,7 +112,7 @@ async function collect(request: Request, env: Env, origin: string | null): Promi
 async function stats(env: Env, origin: string | null): Promise<Response> {
   const today = new Date().toISOString().slice(0, 10);
 
-  const [totals, todayRow, points, countries, cities] = await env.DB.batch<Record<string, unknown>>([
+  const [totals, todayRow, points, countries, cities, recent] = await env.DB.batch<Record<string, unknown>>([
     env.DB.prepare(
       `SELECT COUNT(*) AS visits,
               COUNT(DISTINCT vid) AS visitors,
@@ -140,6 +142,12 @@ async function stats(env: Env, origin: string | null): Promise<Response> {
        FROM hits WHERE city IS NOT NULL
        GROUP BY city, country ORDER BY n DESC LIMIT ?1`
     ).bind(MAX_RANKS),
+    // The "recent visitors" feed. City-level only — no coordinates and no
+    // visitor hash leave the Worker here.
+    env.DB.prepare(
+      `SELECT city, region, country, ts
+       FROM hits ORDER BY ts DESC LIMIT ?1`
+    ).bind(MAX_RECENT),
   ]);
 
   const totalsRow = (totals.results?.[0] ?? {}) as Record<string, number>;
@@ -156,6 +164,7 @@ async function stats(env: Env, origin: string | null): Promise<Response> {
       points: points.results ?? [],
       topCountries: countries.results ?? [],
       topCities: cities.results ?? [],
+      recent: recent.results ?? [],
     },
     origin,
     { 'Cache-Control': `public, max-age=${STATS_CACHE_SECONDS}` }

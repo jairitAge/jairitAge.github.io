@@ -75,6 +75,8 @@ export interface LocaleMessages {
     citiesSuffix: string;
     unavailable: string;
     empty: string;
+    recentVisitors: string;
+    unknownLocation: string;
   };
 }
 
@@ -155,6 +157,8 @@ const en: LocaleMessages = {
     citiesSuffix: 'cities',
     unavailable: 'Visitor stats are unavailable right now.',
     empty: 'No visits recorded yet.',
+    recentVisitors: 'Recent visitors',
+    unknownLocation: 'Unknown location',
   },
 };
 

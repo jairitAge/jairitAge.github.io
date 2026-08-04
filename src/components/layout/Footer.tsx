@@ -1,5 +1,6 @@
 'use client';
 
+import { usePathname } from 'next/navigation';
 import { useLocaleStore } from '@/lib/stores/localeStore';
 import { useMessages } from '@/lib/i18n/useMessages';
 import type { SiteConfig } from '@/lib/config';
@@ -15,8 +16,13 @@ interface FooterProps {
 export default function Footer({ lastUpdated, lastUpdatedByLocale, defaultLocale = 'en', visitors }: FooterProps) {
   const locale = useLocaleStore((state) => state.locale);
   const messages = useMessages();
+  const pathname = usePathname();
 
-  const endpoint = visitors?.enabled === false ? '' : (visitors?.endpoint || '').trim();
+  // /visitors already leads with a full-size map; a second one in the footer of
+  // that page is just the same data twice.
+  const onVisitorsPage = pathname?.replace(/\/$/, '') === '/visitors';
+  const endpoint =
+    visitors?.enabled === false || onVisitorsPage ? '' : (visitors?.endpoint || '').trim();
 
   const resolvedLastUpdated =
     lastUpdatedByLocale?.[locale] ||

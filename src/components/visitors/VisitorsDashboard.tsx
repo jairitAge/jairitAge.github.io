@@ -2,7 +2,8 @@
 
 import { motion } from 'framer-motion';
 import VisitorMap from './VisitorMap';
-import { countryName, formatCount, useVisitorStats } from '@/lib/visitors';
+import type { RecentVisit } from '@/lib/visitors';
+import { countryFlag, countryName, formatCount, timeAgo, useVisitorStats } from '@/lib/visitors';
 import { useMessages } from '@/lib/i18n/useMessages';
 
 function StatTile({ label, value }: { label: string; value: number }) {
@@ -34,6 +35,24 @@ function RankRow({ label, sub, value, max }: { label: string; sub?: string; valu
       <div className="w-14 shrink-0 text-right text-sm tabular-nums text-neutral-600 dark:text-neutral-500">
         {formatCount(value)}
       </div>
+    </div>
+  );
+}
+
+/** One line of the recent-visitors feed: flag, where, how long ago. */
+function RecentRow({ visit, unknown }: { visit: RecentVisit; unknown: string }) {
+  const place = [visit.city, visit.region, visit.country ? countryName(visit.country) : null]
+    // A visit often repeats the city as its region ("Beijing, Beijing"); drop the echo.
+    .filter((part, index, all) => part && all.indexOf(part) === index)
+    .join(', ');
+
+  return (
+    <div className="flex items-center gap-3 border-b border-neutral-200 py-2 last:border-b-0">
+      <span className="w-6 shrink-0 text-center text-base leading-none" aria-hidden="true">
+        {countryFlag(visit.country)}
+      </span>
+      <span className="min-w-0 flex-1 truncate text-sm text-neutral-700">{place || unknown}</span>
+      <span className="shrink-0 text-xs tabular-nums text-neutral-500">{timeAgo(visit.ts)}</span>
     </div>
   );
 }
@@ -115,6 +134,19 @@ export default function VisitorsDashboard({ endpoint }: { endpoint?: string }) {
           )}
         </section>
       </div>
+
+      <section>
+        <h2 className="mb-3 text-sm font-semibold text-primary">{labels.recentVisitors}</h2>
+        {stats.recent.length === 0 ? (
+          <p className="text-sm text-neutral-500">{labels.empty}</p>
+        ) : (
+          <div className="rounded-xl border border-neutral-200 px-4 py-1">
+            {stats.recent.map((visit, index) => (
+              <RecentRow key={`${visit.ts}-${index}`} visit={visit} unknown={labels.unknownLocation} />
+            ))}
+          </div>
+        )}
+      </section>
     </motion.div>
   );
 }
