@@ -110,10 +110,13 @@ async function stats(env: Env, origin: string | null): Promise<Response> {
   const today = new Date().toISOString().slice(0, 10);
 
   const [totals, todayRow, points, countries, recent] = await env.DB.batch<Record<string, unknown>>([
+    // TW/HK/MO fold into CN to match how the site presents them; see
+    // CHINA_REGIONS in src/lib/visitors.ts, which does the same for the
+    // ranking and the flags. Stored rows keep the code the edge returned.
     env.DB.prepare(
       `SELECT COUNT(*) AS visits,
               COUNT(DISTINCT vid) AS visitors,
-              COUNT(DISTINCT country) AS countries
+              COUNT(DISTINCT CASE WHEN country IN ('TW','HK','MO') THEN 'CN' ELSE country END) AS countries
        FROM hits`
     ),
     env.DB.prepare('SELECT COUNT(*) AS visits FROM hits WHERE day = ?1').bind(today),

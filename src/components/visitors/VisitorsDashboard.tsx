@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import VisitorMap from './VisitorMap';
 import type { RecentVisit } from '@/lib/visitors';
-import { countryFlag, countryName, formatCount, timeAgo, useVisitorStats } from '@/lib/visitors';
+import { countryFlag, countryName, formatCount, mergeCountryRanks, timeAgo, useVisitorStats } from '@/lib/visitors';
 import { useMessages } from '@/lib/i18n/useMessages';
 
 function StatTile({ label, value }: { label: string; value: number }) {
@@ -41,10 +41,21 @@ function RankRow({ label, sub, value, max }: { label: string; sub?: string; valu
 
 /** One line of the recent-visitors feed: flag, where, how long ago. */
 function RecentRow({ visit, unknown }: { visit: RecentVisit; unknown: string }) {
-  const place = [visit.city, visit.region, visit.country ? countryName(visit.country) : null]
-    // A visit often repeats the city as its region ("Beijing, Beijing"); drop the echo.
-    .filter((part, index, all) => part && all.indexOf(part) === index)
-    .join(', ');
+  const country = visit.country ? countryName(visit.country) : null;
+
+  // The lookup repeats itself constantly — city and region both "Beijing", a
+  // region of "Taipei City" under a city of "Taipei", or a region of "Taiwan"
+  // under a country label that already reads "Taiwan, China". Drop any part
+  // another part or the country label already spells out.
+  const parts: string[] = [];
+  for (const part of [visit.city, visit.region]) {
+    if (!part) continue;
+    if (country?.includes(part)) continue;
+    if (parts.some((kept) => kept.includes(part) || part.includes(kept))) continue;
+    parts.push(part);
+  }
+
+  const place = [...parts, country].filter(Boolean).join(', ');
 
   return (
     <div className="flex items-center gap-3 border-b border-neutral-200 py-2 last:border-b-0">
@@ -76,7 +87,8 @@ export default function VisitorsDashboard({ endpoint }: { endpoint?: string }) {
     );
   }
 
-  const maxCountry = stats.topCountries[0]?.n ?? 0;
+  const topCountries = mergeCountryRanks(stats.topCountries);
+  const maxCountry = topCountries[0]?.n ?? 0;
 
   return (
     <motion.div
@@ -103,10 +115,10 @@ export default function VisitorsDashboard({ endpoint }: { endpoint?: string }) {
       <div className="grid gap-8 lg:grid-cols-2">
         <section>
           <h2 className="mb-3 text-sm font-semibold text-primary">{labels.topCountries}</h2>
-          {stats.topCountries.length === 0 ? (
+          {topCountries.length === 0 ? (
             <p className="text-sm text-neutral-500">{labels.empty}</p>
           ) : (
-            stats.topCountries.map((row) => (
+            topCountries.map((row) => (
               <RankRow
                 key={row.country}
                 label={countryName(row.country)}

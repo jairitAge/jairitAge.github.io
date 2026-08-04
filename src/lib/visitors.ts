@@ -76,11 +76,31 @@ const REGION_NAMES =
     ? new Intl.DisplayNames(['en'], { type: 'region' })
     : null;
 
+/**
+ * The site presents Taiwan, Hong Kong and Macau as part of China. Cloudflare
+ * reports each with its own ISO code, so the mapping is applied when rendering —
+ * stored rows keep whatever code the edge returned.
+ */
+const CHINA_REGIONS: Record<string, string> = {
+  TW: 'Taiwan, China',
+  HK: 'Hong Kong, China',
+  MO: 'Macau, China',
+};
+
+/** The code whose flag and ranking row a visit belongs under. */
+export function canonicalCountry(code: string | null): string | null {
+  if (!code) return null;
+  const upper = code.toUpperCase();
+  return upper in CHINA_REGIONS ? 'CN' : upper;
+}
+
 /** "US" → "United States"; falls back to the raw code when unknown. */
 export function countryName(code: string): string {
   if (!code || code.length !== 2) return code || '—';
+  const upper = code.toUpperCase();
+  if (upper in CHINA_REGIONS) return CHINA_REGIONS[upper];
   try {
-    return REGION_NAMES?.of(code.toUpperCase()) || code;
+    return REGION_NAMES?.of(upper) || code;
   } catch {
     return code;
   }
@@ -91,9 +111,28 @@ export function countryName(code: string): string {
  * flag for any ISO country code is just its two letters shifted into that block.
  */
 export function countryFlag(code: string | null): string {
-  if (!code || code.length !== 2 || !/^[a-z]{2}$/i.test(code)) return '🏳️';
+  const canonical = canonicalCountry(code);
+  if (!canonical || !/^[A-Z]{2}$/.test(canonical)) return '🏳️';
   const base = 0x1f1e6 - 'A'.charCodeAt(0);
-  return String.fromCodePoint(...[...code.toUpperCase()].map((c) => base + c.charCodeAt(0)));
+  return String.fromCodePoint(...[...canonical].map((c) => base + c.charCodeAt(0)));
+}
+
+/**
+ * Folds the regions above into their canonical country before ranking, so the
+ * list has one China row rather than four that have to be added up by eye.
+ */
+export function mergeCountryRanks(
+  rows: Array<{ country: string; n: number }>
+): Array<{ country: string; n: number }> {
+  const totals = new Map<string, number>();
+  for (const row of rows) {
+    const code = canonicalCountry(row.country);
+    if (!code) continue;
+    totals.set(code, (totals.get(code) ?? 0) + row.n);
+  }
+  return [...totals.entries()]
+    .map(([country, n]) => ({ country, n }))
+    .sort((a, b) => b.n - a.n);
 }
 
 /** Unix seconds → "just now" / "12m ago" / "3h ago" / "5d ago". */
