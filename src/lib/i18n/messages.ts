@@ -150,7 +150,8 @@ const en: LocaleMessages = {
     countries: 'Countries',
     cities: 'Cities',
     mapTitle: 'Visitor map',
-    mapNote: 'Each dot is a city; larger dots mean more visits. Locations are rounded to about 11km.',
+    mapNote:
+      'Each dot is a city, sized by visit count. Locations are guessed from the IP address, so they point at a network rather than a person — a VPN or mobile carrier can put a visitor in the wrong city entirely.',
     topCountries: 'Top countries',
     topCities: 'Top cities',
     visitsFrom: 'visits from',

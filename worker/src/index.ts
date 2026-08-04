@@ -82,17 +82,13 @@ async function collect(request: Request, env: Env, origin: string | null): Promi
   const vid = await visitorId(request, env);
   const now = Math.floor(Date.now() / 1000);
 
-  const recent = await env.DB.prepare('SELECT ts FROM hits WHERE vid = ?1 ORDER BY ts DESC LIMIT 1')
-    .bind(vid)
-    .first<{ ts: number }>();
-
-  if (recent && now - recent.ts < SESSION_WINDOW_SECONDS) {
-    return json({ ok: true, deduped: true }, origin);
-  }
-
-  await env.DB.prepare(
+  // Session dedup and the insert are one statement on purpose. Checking with a
+  // separate SELECT lets two concurrent requests from the same visitor both see
+  // "no recent hit" and both insert, double-counting the visit.
+  const result = await env.DB.prepare(
     `INSERT INTO hits (vid, ts, day, lat, lon, city, region, country)
-     VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8)`
+     SELECT ?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8
+     WHERE NOT EXISTS (SELECT 1 FROM hits WHERE vid = ?1 AND ts > ?9)`
   )
     .bind(
       vid,
@@ -102,11 +98,12 @@ async function collect(request: Request, env: Env, origin: string | null): Promi
       lon,
       cf?.city ?? null,
       cf?.region ?? null,
-      cf?.country ?? null
+      cf?.country ?? null,
+      now - SESSION_WINDOW_SECONDS
     )
     .run();
 
-  return json({ ok: true }, origin);
+  return json({ ok: true, deduped: (result.meta?.changes ?? 0) === 0 }, origin);
 }
 
 async function stats(env: Env, origin: string | null): Promise<Response> {
