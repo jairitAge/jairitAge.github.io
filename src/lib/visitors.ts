@@ -23,7 +23,6 @@ export interface VisitorStats {
     visits: number;
     visitors: number;
     countries: number;
-    cities: number;
     today: number;
   };
   points: VisitorPoint[];

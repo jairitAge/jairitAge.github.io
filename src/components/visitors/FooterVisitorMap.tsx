@@ -30,7 +30,7 @@ export default function FooterVisitorMap({ endpoint }: { endpoint: string }) {
       </Link>
       <p className="text-xs text-neutral-500">
         <span className="tabular-nums">{formatCount(stats.totals.visits)}</span> {messages.visitors.visitsFrom}{' '}
-        <span className="tabular-nums">{formatCount(stats.totals.cities)}</span> {messages.visitors.citiesSuffix}
+        <span className="tabular-nums">{formatCount(stats.totals.countries)}</span> {messages.visitors.countriesSuffix}
       </p>
     </div>
   );

@@ -113,8 +113,7 @@ async function stats(env: Env, origin: string | null): Promise<Response> {
     env.DB.prepare(
       `SELECT COUNT(*) AS visits,
               COUNT(DISTINCT vid) AS visitors,
-              COUNT(DISTINCT country) AS countries,
-              COUNT(DISTINCT city) AS cities
+              COUNT(DISTINCT country) AS countries
        FROM hits`
     ),
     env.DB.prepare('SELECT COUNT(*) AS visits FROM hits WHERE day = ?1').bind(today),
@@ -150,7 +149,6 @@ async function stats(env: Env, origin: string | null): Promise<Response> {
         visits: totalsRow.visits ?? 0,
         visitors: totalsRow.visitors ?? 0,
         countries: totalsRow.countries ?? 0,
-        cities: totalsRow.cities ?? 0,
         today: ((todayRow.results?.[0] ?? {}) as Record<string, number>).visits ?? 0,
       },
       points: points.results ?? [],

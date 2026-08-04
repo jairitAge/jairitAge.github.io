@@ -66,12 +66,11 @@ export interface LocaleMessages {
     uniqueVisitors: string;
     today: string;
     countries: string;
-    cities: string;
     mapTitle: string;
     mapNote: string;
     topCountries: string;
     visitsFrom: string;
-    citiesSuffix: string;
+    countriesSuffix: string;
     unavailable: string;
     empty: string;
     recentVisitors: string;
@@ -147,13 +146,12 @@ const en: LocaleMessages = {
     uniqueVisitors: 'Unique visitors',
     today: 'Today',
     countries: 'Countries',
-    cities: 'Cities',
     mapTitle: 'Visitor map',
     mapNote:
       'Each dot is a city, sized by visit count. Locations are guessed from the IP address, so they point at a network rather than a person — a VPN or mobile carrier can put a visitor in the wrong city entirely.',
     topCountries: 'Top countries',
     visitsFrom: 'visits from',
-    citiesSuffix: 'cities',
+    countriesSuffix: 'countries',
     unavailable: 'Visitor stats are unavailable right now.',
     empty: 'No visits recorded yet.',
     recentVisitors: 'Recent visitors',

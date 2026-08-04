@@ -85,12 +85,11 @@ export default function VisitorsDashboard({ endpoint }: { endpoint?: string }) {
       transition={{ duration: 0.5 }}
       className="space-y-8"
     >
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+      <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
         <StatTile label={labels.totalVisits} value={stats.totals.visits} />
         <StatTile label={labels.uniqueVisitors} value={stats.totals.visitors} />
         <StatTile label={labels.today} value={stats.totals.today} />
         <StatTile label={labels.countries} value={stats.totals.countries} />
-        <StatTile label={labels.cities} value={stats.totals.cities} />
       </div>
 
       <section>
