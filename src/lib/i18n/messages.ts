@@ -57,6 +57,24 @@ export interface LocaleMessages {
   footer: {
     lastUpdated: string;
     builtWithPrism: string;
+    visitors: string;
+  };
+  visitors: {
+    title: string;
+    description: string;
+    totalVisits: string;
+    uniqueVisitors: string;
+    today: string;
+    countries: string;
+    cities: string;
+    mapTitle: string;
+    mapNote: string;
+    topCountries: string;
+    topCities: string;
+    visitsFrom: string;
+    citiesSuffix: string;
+    unavailable: string;
+    empty: string;
   };
 }
 
@@ -119,6 +137,24 @@ const en: LocaleMessages = {
   footer: {
     lastUpdated: 'Last updated',
     builtWithPrism: 'Built with PRISM',
+    visitors: 'Visitors',
+  },
+  visitors: {
+    title: 'Visitors',
+    description: 'Where the people reading this site come from.',
+    totalVisits: 'Total visits',
+    uniqueVisitors: 'Unique visitors',
+    today: 'Today',
+    countries: 'Countries',
+    cities: 'Cities',
+    mapTitle: 'Visitor map',
+    mapNote: 'Each dot is a city; larger dots mean more visits. Locations are rounded to about 11km.',
+    topCountries: 'Top countries',
+    topCities: 'Top cities',
+    visitsFrom: 'visits from',
+    citiesSuffix: 'cities',
+    unavailable: 'Visitor stats are unavailable right now.',
+    empty: 'No visits recorded yet.',
   },
 };
 
@@ -181,6 +217,24 @@ const zh: LocaleMessages = {
   footer: {
     lastUpdated: '最近更新',
     builtWithPrism: '由 PRISM 构建',
+    visitors: '访客地图',
+  },
+  visitors: {
+    title: '访客地图',
+    description: '看看都有谁在读这个站点。',
+    totalVisits: '总访问',
+    uniqueVisitors: '独立访客',
+    today: '今日',
+    countries: '国家/地区',
+    cities: '城市',
+    mapTitle: '访客分布',
+    mapNote: '每个点是一座城市，点越大访问越多。位置精度约 11 公里。',
+    topCountries: '国家/地区排行',
+    topCities: '城市排行',
+    visitsFrom: '次访问，来自',
+    citiesSuffix: '座城市',
+    unavailable: '访客统计暂时不可用。',
+    empty: '还没有访问记录。',
   },
 };
 

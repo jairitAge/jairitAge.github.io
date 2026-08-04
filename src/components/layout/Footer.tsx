@@ -1,33 +1,22 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
 import { useLocaleStore } from '@/lib/stores/localeStore';
 import { useMessages } from '@/lib/i18n/useMessages';
+import type { SiteConfig } from '@/lib/config';
+import FooterVisitorMap from '@/components/visitors/FooterVisitorMap';
 
 interface FooterProps {
   lastUpdated?: string;
   lastUpdatedByLocale?: Record<string, string | undefined>;
   defaultLocale?: string;
+  visitors?: SiteConfig['visitors'];
 }
 
-export default function Footer({ lastUpdated, lastUpdatedByLocale, defaultLocale = 'en' }: FooterProps) {
+export default function Footer({ lastUpdated, lastUpdatedByLocale, defaultLocale = 'en', visitors }: FooterProps) {
   const locale = useLocaleStore((state) => state.locale);
   const messages = useMessages();
-  const mapRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const container = mapRef.current;
-    if (!container) return;
-    if (container.querySelector('script#clustrmaps')) return;
-
-    const script = document.createElement('script');
-    script.type = 'text/javascript';
-    script.id = 'clustrmaps';
-    script.async = false;
-    script.src =
-      'https://cdn.clustrmaps.com/map_v2.js?cl=ffffff&w=a&t=tt&d=O8yCy1ZqyS0B2EIJxnHDBRoE_-qtoy5zcaL18bx2znI&cmo=ff5353&cmn=ff5353';
-    container.appendChild(script);
-  }, []);
+  const endpoint = visitors?.enabled === false ? '' : (visitors?.endpoint || '').trim();
 
   const resolvedLastUpdated =
     lastUpdatedByLocale?.[locale] ||
@@ -38,13 +27,7 @@ export default function Footer({ lastUpdated, lastUpdatedByLocale, defaultLocale
   return (
     <footer className="border-t border-neutral-200/50 bg-neutral-50/50 dark:bg-neutral-900/50 dark:border-neutral-700/50">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div className="flex flex-col items-center gap-3 mb-4">
-          <p className="text-xs text-neutral-500">Visitors</p>
-          <div
-            ref={mapRef}
-            className="w-full max-w-[800px] overflow-hidden [&_img]:max-w-full [&_img]:h-auto [&_iframe]:max-w-full"
-          />
-        </div>
+        {endpoint && <FooterVisitorMap endpoint={endpoint} />}
         <div className="flex flex-col sm:flex-row justify-between items-center gap-2">
           <p className="text-xs text-neutral-500">
             {messages.footer.lastUpdated}: {resolvedLastUpdated}

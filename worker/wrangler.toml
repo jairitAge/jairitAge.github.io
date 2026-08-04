@@ -1,0 +1,13 @@
+name = "visitor-map"
+main = "src/index.ts"
+compatibility_date = "2025-01-01"
+
+[vars]
+# Origins allowed to call this Worker. Everything else gets a 403.
+ALLOWED_ORIGINS = "https://jairitage.github.io,http://localhost:3000"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "visitor-map"
+# Filled in by `wrangler d1 create visitor-map`.
+database_id = "b9c92741-c797-4f2b-a81d-5443c24b1e63"

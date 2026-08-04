@@ -6,7 +6,8 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "gen:landmask": "node scripts/gen-land-mask.mjs"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.4",
@@ -29,12 +30,15 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "d3-geo": "^3.1.1",
     "eslint": "^9",
     "eslint-config-next": "15.3.3",
     "lightningcss": "^1",
     "svg2ico": "^1.0.35",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "topojson-client": "^3.1.0",
+    "typescript": "^5",
+    "world-atlas": "^2.0.2"
   },
   "optionalDependencies": {
     "lightningcss-linux-x64-gnu": "^1"

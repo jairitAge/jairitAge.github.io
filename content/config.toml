@@ -24,6 +24,17 @@ github = "https://github.com/jairitAge"
 linkedin = "https://www.linkedin.com/in/qianxu213"
 wechat_qr = "/wechat-qr-v3.jpg"
 
+[visitors]
+# Visitor map in the footer plus the /visitors page, served by the Cloudflare
+# Worker in worker/ — see worker/README.md for the one-time deploy. Self-hosted
+# on purpose: the two hosted services this replaced (ClustrMaps, then its
+# successor MapMyVisitors) both went down and took the widget with them.
+#
+# Paste the URL `wrangler deploy` prints below. Leave it empty to hide the map
+# in the footer and on /visitors.
+enabled = true
+endpoint = "https://visitor-map.jairitage.workers.dev"
+
 [features]
 # Show a like button on the about page
 enable_likes = true
