@@ -164,18 +164,36 @@
 }
 
 
-/* The gradient sits on the root element, not on body. A background on html is
-   what paints the canvas, and the canvas is what shows through when the page
-   bounces past its top or bottom edge. With the gradient on body, html's flat
-   colour filled that gap instead — white against a pale blue page top — which
-   is why scroll bounce used to be turned off here rather than fixed. */
+/* Two layers, both on the root element so they paint the canvas — the canvas is
+   what shows through when the page bounces past an edge.
+
+   The first layer is the gradient you actually see. It is fixed, so it spans the
+   viewport and looks identical at any scroll position.
+
+   A fixed background is only painted across the viewport, though, so it stops
+   exactly where the bounce gap begins and the gap fell back to bare white. The
+   second layer covers it: it scrolls with the document and is deliberately drawn
+   600px taller than it on each side, split down the middle into the gradient's
+   two end colours. Whatever the page height, everything above the document is in
+   its top half and everything below is in its bottom half, so the gap picks up
+   the colour of whichever edge is being pulled. Inside the viewport the fixed
+   layer sits on top of it, so the hard split never shows. */
 html {
-  background: linear-gradient(
-    to bottom,
-    var(--background-gradient-from) 0%,
-    var(--background-gradient-to) 100%
-  );
-  background-attachment: fixed;
+  background-image:
+    linear-gradient(
+      to bottom,
+      var(--background-gradient-from) 0%,
+      var(--background-gradient-to) 100%
+    ),
+    linear-gradient(
+      to bottom,
+      var(--background-gradient-from) 0 50%,
+      var(--background-gradient-to) 50% 100%
+    );
+  background-attachment: fixed, scroll;
+  background-size: 100% 100%, 100% calc(100% + 1200px);
+  background-position: top, center;
+  background-repeat: no-repeat, no-repeat;
 }
 
 body {
