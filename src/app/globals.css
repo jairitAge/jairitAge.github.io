@@ -164,22 +164,21 @@
 }
 
 
-html,
-body {
-  overscroll-behavior: none;
-}
-
+/* The gradient sits on the root element, not on body. A background on html is
+   what paints the canvas, and the canvas is what shows through when the page
+   bounces past its top or bottom edge. With the gradient on body, html's flat
+   colour filled that gap instead — white against a pale blue page top — which
+   is why scroll bounce used to be turned off here rather than fixed. */
 html {
-  background: var(--background-gradient-to);
-}
-
-body {
   background: linear-gradient(
     to bottom,
     var(--background-gradient-from) 0%,
     var(--background-gradient-to) 100%
   );
   background-attachment: fixed;
+}
+
+body {
   color: var(--foreground);
   font-family: var(--font-sans);
   line-height: var(--line-height-normal);
