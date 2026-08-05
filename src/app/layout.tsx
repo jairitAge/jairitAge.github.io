@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import Navigation from '@/components/layout/Navigation';
 import Footer from '@/components/layout/Footer';
+import ScrollEdgeColor from '@/components/layout/ScrollEdgeColor';
 import { ThemeProvider } from '@/components/ui/ThemeProvider';
 import { LocaleProvider } from '@/components/ui/LocaleProvider';
 import { getConfig } from '@/lib/config';
@@ -197,6 +198,7 @@ export default function RootLayout({
         />
       </head>
       <body className="font-sans antialiased">
+        <ScrollEdgeColor />
         <ThemeProvider>
           <LocaleProvider config={runtimeI18n}>
             <Navigation
