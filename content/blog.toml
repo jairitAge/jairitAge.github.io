@@ -5,6 +5,7 @@ description = "Random thoughts and notes from life and work."
 [[items]]
 title = "First vLLM contribution"
 date = "2026-08-06"
+location = "San Diego, United States"
 content = "My first pull request to a major open-source project got merged into vLLM: [#51100](https://github.com/vllm-project/vllm/pull/51100). It fixes a silent correctness bug in CPU offloading — a cache hit landing exactly on a chunk boundary could restore a Mamba state that had already consumed its last token, so generation resumed from the wrong position and quietly changed the output."
 
 [[items]]
